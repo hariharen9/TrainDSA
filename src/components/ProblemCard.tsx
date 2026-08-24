@@ -21,6 +21,7 @@ import {
   difficultyLabel,
 } from '../lib/labels'
 import { formatSeconds, parseProblemNote, serializeProblemNote, type ProblemNoteData } from '../lib/notes'
+import { PROBLEM_METADATA } from '../lib/problemMetadata'
 import { MarkdownBody } from './ui'
 import type { Confidence, Problem, ProgressEntry, ProgressStatus } from '../lib/types'
 
@@ -193,6 +194,28 @@ export function ProblemCard({ problem, progress, userId, onUpdate }: Props) {
                 </span>
               )}
             </div>
+
+            {/* FAANG Companies & Pattern Tags */}
+            {PROBLEM_METADATA[problem.id] && (
+              <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                {PROBLEM_METADATA[problem.id].companies.slice(0, 3).map((comp) => (
+                  <span
+                    key={comp}
+                    className="rounded-md border border-line/60 bg-panel-2/70 px-2 py-0.5 text-[10px] font-medium text-muted"
+                  >
+                    {comp}
+                  </span>
+                ))}
+                {PROBLEM_METADATA[problem.id].patterns.slice(0, 2).map((pat) => (
+                  <span
+                    key={pat}
+                    className="rounded-md border border-gold/30 bg-gold-dim/40 px-2 py-0.5 text-[10px] font-mono text-gold"
+                  >
+                    {pat}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Stopwatch widget */}
