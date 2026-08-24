@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Flame, ListRestart, LogOut, Route, Search, BookOpen } from 'lucide-react'
+import { Flame, ListRestart, LogOut, Route, Search } from 'lucide-react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { Logo } from './Logo'
 import { SearchModal } from './SearchModal'
@@ -67,10 +67,6 @@ export function AppShell() {
                     {reviewCount}
                   </span>
                 )}
-              </NavLink>
-              <NavLink to="/cheatsheet" className={desktopLinkClass}>
-                <BookOpen className="size-3.5" />
-                <span>Cheat Sheet</span>
               </NavLink>
             </nav>
           </div>
@@ -148,17 +144,6 @@ export function AppShell() {
                 )}
               </div>
               <span>Review</span>
-            </>
-          )}
-        </NavLink>
-
-        <NavLink to="/cheatsheet" className={mobileLinkClass}>
-          {({ isActive }) => (
-            <>
-              <div className={`flex size-7 items-center justify-center rounded-full transition ${isActive ? 'bg-gold/20' : ''}`}>
-                <BookOpen className="size-4" />
-              </div>
-              <span>Cheat Sheet</span>
             </>
           )}
         </NavLink>

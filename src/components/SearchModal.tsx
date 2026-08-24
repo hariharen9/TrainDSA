@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
-import { Search, X, Route, CheckCircle2, Circle, Clock, Building2, Tag, ArrowRight, BookOpen } from 'lucide-react'
+import { Search, X, Route, CheckCircle2, Circle, Clock, Building2, Tag, ArrowRight } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useTracker } from '../hooks/useTracker'
 import { ALL_COMPANIES, ALL_PATTERNS, PROBLEM_METADATA } from '../lib/problemMetadata'
@@ -12,11 +12,11 @@ type SearchModalProps = {
 }
 
 type SearchResultItem = {
-  type: 'problem' | 'topic' | 'cheatsheet'
+  type: 'problem' | 'topic'
   id: string
   title: string
   subtitle: string
-  topicId?: string
+  topicId: string
   difficulty?: 'easy' | 'medium' | 'hard'
   status?: 'unattempted' | 'attempted' | 'solved'
   patterns?: string[]
@@ -65,28 +65,6 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const results: SearchResultItem[] = useMemo(() => {
     const q = query.trim().toLowerCase()
     const list: SearchResultItem[] = []
-
-    // 0. Include Cheat Sheet if query matches keywords
-    if (!selectedCompany && !selectedPattern) {
-      if (
-        !q ||
-        'cheat sheet'.includes(q) ||
-        'cheatsheet'.includes(q) ||
-        'python'.includes(q) ||
-        'cpp'.includes(q) ||
-        'c++'.includes(q) ||
-        'java'.includes(q) ||
-        'stl'.includes(q) ||
-        'template'.includes(q)
-      ) {
-        list.push({
-          type: 'cheatsheet',
-          id: 'cheatsheet-item',
-          title: 'DSA Quick-Reference Cheat Sheet',
-          subtitle: 'Python heapq/collections, C++ STL, Java & 5 Core Algorithm Templates',
-        })
-      }
-    }
 
     // 1. Search topics if no specific company/pattern filter
     if (!selectedCompany && !selectedPattern) {
@@ -144,13 +122,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   const handleSelect = (item: SearchResultItem) => {
     onClose()
-    if (item.type === 'cheatsheet') {
-      navigate('/cheatsheet')
-    } else if (item.type === 'topic' && item.topicId) {
-      navigate(`/topic/${item.topicId}`)
-    } else if (item.topicId) {
-      navigate(`/topic/${item.topicId}`)
-    }
+    navigate(`/topic/${item.topicId}`)
   }
 
   // Keyboard arrow selection
@@ -187,7 +159,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               setSelectedIndex(0)
             }}
             onKeyDown={handleKeyDown}
-            placeholder="Search problems, topics, FAANG tags, patterns, or notes (e.g. 'Two Sum', 'Google', 'Cheat Sheet')…"
+            placeholder="Search problems, topics, FAANG tags, patterns, or notes (e.g. 'Two Sum', 'Google', 'Sliding Window')…"
             className="flex-1 bg-transparent text-sm sm:text-base text-ink outline-none placeholder:text-muted/60"
           />
           {query && (
@@ -275,11 +247,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               >
                 <div className="min-w-0 flex-1 space-y-1">
                   <div className="flex items-center gap-2">
-                    {item.type === 'cheatsheet' ? (
-                      <span className="flex size-5 items-center justify-center rounded-md bg-gold text-canvas font-bold">
-                        <BookOpen className="size-3.5" />
-                      </span>
-                    ) : item.type === 'topic' ? (
+                    {item.type === 'topic' ? (
                       <span className="flex size-5 items-center justify-center rounded-md bg-gold/20 text-gold">
                         <Route className="size-3.5" />
                       </span>

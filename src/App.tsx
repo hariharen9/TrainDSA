@@ -5,7 +5,6 @@ import { AuthProvider } from './hooks/useAuth'
 import { ThemeProvider } from './hooks/useTheme'
 import { TrackerProvider } from './hooks/useTracker'
 import { AuthPage } from './pages/AuthPage'
-import { CheatSheetPage } from './pages/CheatSheetPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { ReviewPage } from './pages/ReviewPage'
 import { SetupPage } from './pages/SetupPage'
@@ -21,36 +20,16 @@ export default function App() {
             <Route path="/auth" element={<AuthPage />} />
             <Route
               element={
-                <TrackerProvider>
-                  <AppShell />
-                </TrackerProvider>
+                <ProtectedRoute>
+                  <TrackerProvider>
+                    <AppShell />
+                  </TrackerProvider>
+                </ProtectedRoute>
               }
             >
-              <Route
-                path="/"
-                element={
-                  <ProtectedRoute>
-                    <DashboardPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/topic/:topicId"
-                element={
-                  <ProtectedRoute>
-                    <TopicPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/review"
-                element={
-                  <ProtectedRoute>
-                    <ReviewPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="/cheatsheet" element={<CheatSheetPage />} />
+              <Route path="/" element={<DashboardPage />} />
+              <Route path="/topic/:topicId" element={<TopicPage />} />
+              <Route path="/review" element={<ReviewPage />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
