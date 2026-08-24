@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
+import { Logo } from '../components/Logo'
 import { useAuth } from '../hooks/useAuth'
 import { isSupabaseConfigured } from '../lib/supabase'
 
@@ -39,7 +40,8 @@ export function AuthPage() {
   }
 
   return (
-    <div className="mx-auto flex min-h-svh max-w-md flex-col justify-center px-4">
+    <div className="mx-auto flex min-h-svh max-w-md flex-col justify-center px-4 py-8">
+      <Logo className="size-12 mb-4" />
       <p className="text-xs uppercase tracking-[0.2em] text-gold">Linear interview prep</p>
       <h1 className="mt-2 font-serif text-4xl text-ink">TrainDSA</h1>
       <p className="mt-3 text-sm leading-relaxed text-muted">
