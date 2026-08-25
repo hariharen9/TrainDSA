@@ -5,6 +5,17 @@ import { VitePWA } from 'vite-plugin-pwa'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+  optimizeDeps: {
+    include: [
+      'prismjs',
+      'prismjs/components/prism-c',
+      'prismjs/components/prism-cpp',
+      'prismjs/components/prism-java',
+      'prismjs/components/prism-javascript',
+      'prismjs/components/prism-typescript',
+      'prismjs/components/prism-python',
+    ],
+  },
   plugins: [
     react(),
     tailwindcss(),
