@@ -8,6 +8,7 @@ export type Topic = {
   order_index: number
   concept_md: string
   gotchas_md: string
+  visualizer_id: string | null
   created_at: string
 }
 
@@ -57,7 +58,8 @@ export type Database = {
     Tables: {
       topics: {
         Row: Topic
-        Insert: Partial<Topic> & Pick<Topic, 'id' | 'title' | 'order_index' | 'concept_md' | 'gotchas_md'>
+        Insert: Partial<Topic> &
+          Pick<Topic, 'id' | 'title' | 'order_index' | 'concept_md' | 'gotchas_md'>
         Update: Partial<Topic>
         Relationships: []
       }

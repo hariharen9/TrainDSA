@@ -9,11 +9,57 @@ const topics = [
     id: 'arrays-hashing',
     title: 'Arrays & Hashing',
     order: 1,
-    concept: `Hash maps turn an array scan into constant-time lookups. The core move is to store a value you have already seen (index, frequency, or prefix) so a later element can answer a question without another linear search.
+    visualizer: 'two-sum-hashmap',
+    concept: `## Intuition
 
-Frequency maps count characters or numbers so two collections can be compared in linear time. Prefix sums convert range-sum queries into two array accesses: \`prefix[r] - prefix[l-1]\`. Hash sets answer membership in expected O(1), which is why duplicate detection and longest-consecutive-sequence both start from a set.
+A hash map is a trade: you spend O(n) memory so that "have I seen this before?" becomes an O(1) lookup instead of an O(n) rescan. That trade is the single biggest lever in this whole topic — almost every "arrays & hashing" problem is really the question "what should I remember about elements I've already passed, so I don't have to look at them again?"
 
-Interviewers care that you pick the right key. Sometimes the key is the element itself, sometimes a sorted signature (anagrams), sometimes a complement (\`target - nums[i]\`). Space is the trade: you buy O(n) extra memory to drop a nested loop from O(n²) to O(n).`,
+Think of it like taking notes while reading a book once, instead of flipping back to earlier pages every time a new detail matters. The map is your notes. What you write down — the *key* — is the real design decision: sometimes it's the value itself (membership), sometimes a count (frequency), sometimes a derived signature (sorted letters, for anagrams), sometimes a complement (\`target - current\`, for pair-sum problems).
+
+## Pattern recognition
+
+You're in hash-map territory when a brute-force solution would need a **nested loop to compare every pair or re-scan for a match** — two \`for\` loops, or one loop with a hidden linear search inside it (\`.includes()\`, \`in\` on a list, another loop). The tell is the phrase "have I seen this" or "does this exist elsewhere in the array," because both are exactly what a hash map answers in O(1).
+
+Match the shape of the question to the shape of the map:
+
+- **Membership only** ("contains duplicate?") → a hash **set**. You only care yes/no.
+- **Membership + position** ("Two Sum" — which *indices*?) → a hash **map** of value → index.
+- **Counting** ("valid anagram," "top k frequent") → a hash map of value → frequency.
+- **Grouping by a derived key** ("group anagrams") → a hash map of signature → list of originals. The signature is usually the sorted string or a per-letter count tuple.
+- **Range queries without rescanning** ("subarray sum equals k") → a *running* hash map of prefix-sum → how many times that prefix has occurred.
+
+## Worked example: Two Sum
+
+Given \`nums = [2, 7, 11, 15]\` and \`target = 9\`, return the indices of the two numbers that add up to the target. The brute-force pair scan is O(n²): for every \`i\`, scan the rest of the array for a partner.
+
+The hash-map reframing: instead of asking "does some other element pair with \`nums[i]\`?", flip the question to "have I already seen the number that would pair with \`nums[i]\`?" That number is \`target - nums[i]\`, the **complement**. If you've kept a running map of every value you've already visited (value → its index), checking "have I seen the complement" is one O(1) lookup — no inner loop at all.
+
+\`\`\`python
+def two_sum(nums, target):
+    seen = {}  # value -> index
+
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in seen:
+            return [seen[complement], i]
+        seen[num] = i
+
+    return []  # no valid pair
+\`\`\`
+
+Trace it: at \`i=0\`, \`num=2\`, complement is \`7\`. The map is still empty, so no match — remember \`{2: 0}\`. At \`i=1\`, \`num=7\`, complement is \`2\`. The map already has \`2 → 0\` from the previous step, so we return \`[0, 1]\` immediately. Notice we never looked back at the array itself — the map *is* our memory of it, and we only ever move forward through \`nums\` once.
+
+## Complexity
+
+One pass, one lookup and one insert per element, both O(1) expected for a hash map — so the whole algorithm is O(n) time. That's down from O(n²) for the brute-force nested loop. The cost is O(n) extra space for the map itself, which is the trade this entire topic is built on: memory for speed.
+
+## Common mistakes
+
+The most common one is checking whether \`nums[i]\` *itself* equals a value you've already stored, instead of checking its *complement* — that solves a different problem. A second: inserting into the map *before* checking for the complement, which lets an element pair with itself (wrong unless the problem explicitly allows reusing an index). A third, specific to counting/frequency variants: using a plain \`set\` when the problem needs multiplicities — a set silently collapses \`[1, 1, 2]\` down to losing the fact that \`1\` appeared twice.
+
+## Try it yourself
+
+Step through the trace below — watch the map fill in one entry at a time, and see exactly which lookup turns a miss into a match.`,
     gotchas: `- Hash collisions do not change big-O in expectation, but adversarial input can degrade naive maps; interviewers still accept HashMap.
 - Duplicate keys: \`set\` loses counts; use a frequency map when multiplicity matters.
 - \`Product of Array Except Self\` forbids division; prefix/suffix products are the intended trick.
@@ -55,16 +101,72 @@ The invariant is the point: after each move, every discarded index is provably w
     id: 'sliding-window',
     title: 'Sliding Window',
     order: 3,
-    concept: `A sliding window represents a contiguous subarray with two bounds. Expand the right end to include new elements, then shrink the left end until the window is valid again. Fixed-length windows only slide; variable windows grow and shrink based on a constraint (unique characters, sum, frequency budget).
+    visualizer: 'sliding-window',
+    concept: `## Intuition
 
-The payoff is converting O(n²) subarray enumeration into O(n) because each index enters and leaves the window at most once. Maintain a running aggregate: sum, character counts, or a deque of useful extrema (sliding window maximum).
+Picture a rubber band stretched over part of an array — that's the window. It has two ends, \`left\` and \`right\`, and it only ever moves forward. \`right\` reaches out to grab new elements; \`left\` lets go of old ones when the window stops being valid. Neither pointer ever walks backward.
 
-Ask: is the property monotonic as the window grows? If adding an element can only make the window “worse” on one axis, you can shrink from the left greedily. If not, you may need a different structure.`,
-    gotchas: `- Validity checks: update counts *before* deciding whether to shrink, or you skip a legal window.
-- Longest vs shortest: longest expands then shrinks when invalid; minimum window shrinks while still valid and tracks the best.
-- Permutation in string is a fixed window equal to the pattern length.
-- Sliding window maximum: a decreasing deque of indices, not a heap, keeps O(n).
-- Empty / single-element arrays and windows larger than the array.`,
+That one property — *no backward movement* — is the entire reason sliding window is fast. A brute-force "try every subarray" approach checks all \`n²\` start/end pairs. Sliding window instead asks: as I move \`right\` forward one step at a time, what's the least amount of work I need to do at \`left\` to keep the window valid? Each index is added to the window exactly once (when \`right\` passes it) and removed at most once (when \`left\` passes it). Two passes total, not \`n\` passes — that's how you get from O(n²) down to O(n).
+
+## Pattern recognition
+
+You're looking at a sliding-window problem when the question is about a **contiguous** run of elements (not any subset — contiguous matters) and it asks for one of:
+
+- The longest / shortest run satisfying some condition ("longest substring without repeating characters", "minimum window that contains all of...")
+- Whether a run of a fixed size k satisfies a condition ("permutation in string", "max sum of any subarray of size k")
+- A running aggregate over every window of size k ("sliding window maximum")
+
+The giveaway phrase is usually **"substring"**, **"subarray"**, or **"contiguous"** combined with a size constraint or an optimization ("longest", "shortest", "at most", "exactly").
+
+There are two flavors, and mixing them up is the #1 source of bugs:
+
+- **Fixed-size window** — the window length is given (k). You slide it one step at a time: add the new right element, remove the leaving left element, done. No growing or shrinking logic needed.
+- **Variable-size window** — you don't know the length in advance. You grow \`right\` until the window becomes *invalid* (or reaches the target), then shrink \`left\` until it's valid again, tracking the best window you've seen along the way.
+
+## Worked example: Longest Substring Without Repeating Characters
+
+Given \`s = "abcabcbb"\`, find the length of the longest substring with no repeated characters. This is the canonical variable-size window.
+
+The state we maintain is a set (or map) of characters currently inside the window, plus \`left\`. We walk \`right\` across the string. Each time \`s[right]\` is already in the window, that's our signal to shrink from the left — but only until the *duplicate* is gone, not the whole window.
+
+\`\`\`python
+def length_of_longest_substring(s: str) -> int:
+    window = set()
+    left = 0
+    best = 0
+
+    for right in range(len(s)):
+        # Shrink from the left until s[right] can safely enter
+        while s[right] in window:
+            window.remove(s[left])
+            left += 1
+
+        window.add(s[right])
+        best = max(best, right - left + 1)
+
+    return best
+\`\`\`
+
+Trace it on \`"abcabcbb"\`: the window grows to \`{a,b,c}\` (length 3) before hitting the second \`a\` at index 3. The while-loop then removes \`s[left]\` (which is \`a\`) and advances \`left\` to 1 — just enough to drop the duplicate, not a full reset. The window becomes \`{b,c,a}\`, still length 3. \`best\` never exceeds 3 for this string, which matches the known answer.
+
+Notice what did *not* happen: we never reset \`left\` back to \`right\`, and we never rescanned characters we'd already removed. That's the O(n) guarantee — \`left\` only moves forward, and each character is added once and removed at most once across the whole run.
+
+## Complexity
+
+Both pointers move strictly left to right and each visits every index at most once, so the total work across the *whole* run is O(n), even though there's a nested while-loop. This is the classic "amortized" argument: the while-loop looks like it could make this O(n²), but sum up how many times \`left\` moves across the *entire* algorithm — it's bounded by n, because \`left\` can't move more times than \`right\` has moved. Space is O(k) for the window's character set/map, where k is the alphabet size or window size — O(1) if the character set is bounded (e.g. ASCII).
+
+## Common mistakes
+
+The most common bug is updating the window's state *after* deciding whether it's valid, instead of before — you end up validating a window that no longer reflects the count you just checked. A close second: for "longest" problems, people write code that shrinks back to empty and restarts instead of shrinking just enough to become valid again — that silently degrades you back to O(n²). And for fixed-size windows, forgetting to prime the first k elements before you start sliding (i.e. starting the slide loop from index 0 instead of index k) throws off every subsequent comparison.
+
+## Try it yourself
+
+The panel below lets you step through the exact trace above — watch how \`left\` only jumps forward when it has to, and never resets.`,
+    gotchas: `- Update the window's state *before* checking validity, or you validate against stale counts.
+- Longest vs shortest: longest expands then shrinks-just-enough when invalid; minimum window shrinks while still valid and records the best along the way.
+- Permutation in string is a fixed window equal to the pattern length — no growing/shrinking, just slide.
+- Sliding window maximum needs a decreasing deque of indices, not a heap, to stay O(n).
+- Watch empty strings/arrays and windows larger than the input.`,
     problems: [
       ['best-time-to-buy-and-sell-stock', 'Best Time to Buy and Sell Stock', 'best-time-to-buy-and-sell-stock', 'easy'],
       ['longest-substring-without-repeating-characters', 'Longest Substring Without Repeating Characters', 'longest-substring-without-repeating-characters', 'medium'],
@@ -408,10 +510,10 @@ function sqlString(s) {
 }
 
 const topicRows = topics
-  .map(
-    (t) =>
-      `  ('${t.id}', '${sqlString(t.title)}', ${t.order}, '${sqlString(t.concept)}', '${sqlString(t.gotchas)}')`,
-  )
+  .map((t) => {
+    const visualizer = t.visualizer ? `'${sqlString(t.visualizer)}'` : 'null'
+    return `  ('${t.id}', '${sqlString(t.title)}', ${t.order}, '${sqlString(t.concept)}', '${sqlString(t.gotchas)}', ${visualizer})`
+  })
   .join(',\n')
 
 const problemRows = topics
@@ -425,14 +527,15 @@ const problemRows = topics
 
 const sql = `-- Curriculum seed: 17 topics and curated problem sets.
 
-insert into public.topics (id, title, order_index, concept_md, gotchas_md)
+insert into public.topics (id, title, order_index, concept_md, gotchas_md, visualizer_id)
 values
 ${topicRows}
 on conflict (id) do update set
   title = excluded.title,
   order_index = excluded.order_index,
   concept_md = excluded.concept_md,
-  gotchas_md = excluded.gotchas_md;
+  gotchas_md = excluded.gotchas_md,
+  visualizer_id = excluded.visualizer_id;
 
 insert into public.problems (id, topic_id, title, url, difficulty, order_index)
 values
