@@ -11,7 +11,7 @@ import { buildTopicProgress, completionPercent } from '../lib/progress'
 export function TopicPage() {
   const { topicId } = useParams()
   const { user } = useAuth()
-  const { topics, problems, progressByProblem, updateProgress, loading, error } = useTracker()
+  const { topics, problems, progressByProblem, updateProgress, error } = useTracker()
   const [gotchasOpen, setGotchasOpen] = useState(false)
   const [problemsOpen, setProblemsOpen] = useState(false)
 
@@ -22,7 +22,6 @@ export function TopicPage() {
   const row = rows.find((item) => item.topic.id === topicId)
   const upcoming = row?.state === 'upcoming'
 
-  if (loading) return <p className="text-sm text-muted">Loading topic…</p>
   if (!row) return <p className="text-sm text-hard">Topic not found.</p>
 
   const percent = completionPercent(row.solved, row.total)

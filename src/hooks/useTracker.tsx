@@ -7,10 +7,48 @@ import {
   useState,
   type ReactNode,
 } from 'react'
+import { PROBLEMS, TOPICS } from '../data/curriculum'
 import { emptyProgress, needsReview } from '../lib/progress'
-import { supabase } from '../lib/supabase'
+import { isSupabaseConfigured, supabase } from '../lib/supabase'
 import type { Problem, ProgressEntry, ProgressPatch, StreakLog, Topic } from '../lib/types'
 import { useAuth } from './useAuth'
+
+const LOCAL_PROGRESS_KEY = 'traindsa_local_progress'
+const LOCAL_STREAKS_KEY = 'traindsa_local_streaks'
+
+function loadLocalProgress(): ProgressEntry[] {
+  try {
+    const raw = localStorage.getItem(LOCAL_PROGRESS_KEY)
+    return raw ? (JSON.parse(raw) as ProgressEntry[]) : []
+  } catch {
+    return []
+  }
+}
+
+function saveLocalProgress(entries: ProgressEntry[]) {
+  try {
+    localStorage.setItem(LOCAL_PROGRESS_KEY, JSON.stringify(entries))
+  } catch {
+    // ignore quota or private mode errors
+  }
+}
+
+function loadLocalStreaks(): StreakLog[] {
+  try {
+    const raw = localStorage.getItem(LOCAL_STREAKS_KEY)
+    return raw ? (JSON.parse(raw) as StreakLog[]) : []
+  } catch {
+    return []
+  }
+}
+
+function saveLocalStreaks(streaks: StreakLog[]) {
+  try {
+    localStorage.setItem(LOCAL_STREAKS_KEY, JSON.stringify(streaks))
+  } catch {
+    // ignore
+  }
+}
 
 type TrackerContextValue = {
   topics: Topic[]
@@ -28,43 +66,22 @@ const TrackerContext = createContext<TrackerContextValue | undefined>(undefined)
 
 export function TrackerProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth()
-  const [topics, setTopics] = useState<Topic[]>([])
-  const [problems, setProblems] = useState<Problem[]>([])
-  const [progress, setProgress] = useState<ProgressEntry[]>([])
-  const [streaks, setStreaks] = useState<StreakLog[]>([])
-  const [loading, setLoading] = useState(true)
+  const [progress, setProgress] = useState<ProgressEntry[]>(() => loadLocalProgress())
+  const [streaks, setStreaks] = useState<StreakLog[]>(() => loadLocalStreaks())
+  const [loading, setLoading] = useState(Boolean(user && isSupabaseConfigured))
   const [error, setError] = useState<string | null>(null)
 
   const load = useCallback(async () => {
-    setLoading(true)
     setError(null)
 
-    const [topicsRes, problemsRes] = await Promise.all([
-      supabase.from('topics').select('*').order('order_index', { ascending: true }),
-      supabase.from('problems').select('*').order('order_index', { ascending: true }),
-    ])
-
-    if (topicsRes.error) {
-      setError(topicsRes.error.message)
-      setLoading(false)
-      return
-    }
-    if (problemsRes.error) {
-      setError(problemsRes.error.message)
+    if (!user || !isSupabaseConfigured) {
+      setProgress(loadLocalProgress())
+      setStreaks(loadLocalStreaks())
       setLoading(false)
       return
     }
 
-    setTopics(topicsRes.data ?? [])
-    setProblems(problemsRes.data ?? [])
-
-    if (!user) {
-      setProgress([])
-      setStreaks([])
-      setLoading(false)
-      return
-    }
-
+    setLoading(true)
     const [progressRes, streakRes] = await Promise.all([
       supabase.from('progress_entries').select('*').eq('user_id', user.id),
       supabase.from('streak_logs').select('*').eq('user_id', user.id).order('activity_date', { ascending: true }),
@@ -90,49 +107,56 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
 
   const updateProgress = useCallback(
     async (problemId: string, patch: ProgressPatch) => {
-      if (!user) return
-      const current = progressByProblem.get(problemId) ?? emptyProgress(problemId, user.id)
+      const userId = user?.id ?? 'guest'
+      const current = progressByProblem.get(problemId) ?? emptyProgress(problemId, userId)
       const next: ProgressEntry = {
         ...current,
         ...patch,
-        user_id: user.id,
+        user_id: userId,
         problem_id: problemId,
         updated_at: new Date().toISOString(),
       }
 
       setProgress((prev) => {
         const index = prev.findIndex((entry) => entry.problem_id === problemId)
-        if (index === -1) return [...prev, next]
-        const copy = prev.slice()
-        copy[index] = next
-        return copy
+        const updated = index === -1 ? [...prev, next] : prev.map((entry, i) => (i === index ? next : entry))
+        if (!user || !isSupabaseConfigured) {
+          saveLocalProgress(updated)
+        }
+        return updated
       })
 
       if (next.status === 'attempted' || next.status === 'solved') {
         const today = new Date().toISOString().slice(0, 10)
         setStreaks((prev) => {
           if (prev.some((log) => log.activity_date === today)) return prev
-          return [
+          const updated = [
             ...prev,
-            { id: `local-streak-${today}`, user_id: user.id, activity_date: today },
+            { id: `local-streak-${today}`, user_id: userId, activity_date: today },
           ]
+          if (!user || !isSupabaseConfigured) {
+            saveLocalStreaks(updated)
+          }
+          return updated
         })
       }
 
-      const { error: upsertError } = await supabase.from('progress_entries').upsert(
-        {
-          user_id: user.id,
-          problem_id: problemId,
-          status: next.status,
-          confidence: next.confidence,
-          note: next.note,
-        },
-        { onConflict: 'user_id,problem_id' },
-      )
+      if (user && isSupabaseConfigured) {
+        const { error: upsertError } = await supabase.from('progress_entries').upsert(
+          {
+            user_id: user.id,
+            problem_id: problemId,
+            status: next.status,
+            confidence: next.confidence,
+            note: next.note,
+          },
+          { onConflict: 'user_id,problem_id' },
+        )
 
-      if (upsertError) {
-        setError(upsertError.message)
-        await load()
+        if (upsertError) {
+          setError(upsertError.message)
+          await load()
+        }
       }
     },
     [load, progressByProblem, user],
@@ -145,8 +169,8 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(
     () => ({
-      topics,
-      problems,
+      topics: TOPICS,
+      problems: PROBLEMS,
       progressByProblem,
       streakDates: streaks.map((log) => log.activity_date),
       loading,
@@ -155,7 +179,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
       updateProgress,
       reviewEntries,
     }),
-    [topics, problems, progressByProblem, streaks, loading, error, load, updateProgress, reviewEntries],
+    [progressByProblem, streaks, loading, error, load, updateProgress, reviewEntries],
   )
 
   return <TrackerContext.Provider value={value}>{children}</TrackerContext.Provider>

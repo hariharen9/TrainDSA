@@ -20,8 +20,7 @@ const stateLabel = {
 } as const
 
 export function DashboardPage() {
-  const { topics, problems, progressByProblem, streakDates, reviewEntries, loading, error } =
-    useTracker()
+  const { topics, problems, progressByProblem, streakDates, reviewEntries, error } = useTracker()
 
   const rows = buildTopicProgress(topics, problems, progressByProblem)
   const active = currentTopic(rows)
@@ -30,7 +29,6 @@ export function DashboardPage() {
   const totalSolved = rows.reduce((s, r) => s + r.solved, 0)
   const totalProblems = rows.reduce((s, r) => s + r.total, 0)
 
-  if (loading) return <p className="text-sm text-muted">Loading curriculum…</p>
 
   return (
     <div className="space-y-8">

@@ -9,7 +9,7 @@ export type Topic = {
   concept_md: string
   gotchas_md: string
   visualizer_id: string | null
-  created_at: string
+  created_at?: string
 }
 
 export type Problem = {
@@ -19,7 +19,7 @@ export type Problem = {
   url: string
   difficulty: Difficulty
   order_index: number
-  created_at: string
+  created_at?: string
 }
 
 export type ProgressEntry = {
@@ -56,19 +56,6 @@ export type TopicProgress = {
 export type Database = {
   public: {
     Tables: {
-      topics: {
-        Row: Topic
-        Insert: Partial<Topic> &
-          Pick<Topic, 'id' | 'title' | 'order_index' | 'concept_md' | 'gotchas_md'>
-        Update: Partial<Topic>
-        Relationships: []
-      }
-      problems: {
-        Row: Problem
-        Insert: Partial<Problem> & Pick<Problem, 'id' | 'topic_id' | 'title' | 'url' | 'difficulty' | 'order_index'>
-        Update: Partial<Problem>
-        Relationships: []
-      }
       progress_entries: {
         Row: ProgressEntry
         Insert: Omit<ProgressEntry, 'id' | 'updated_at'> & { id?: string; updated_at?: string }
@@ -85,7 +72,6 @@ export type Database = {
     Views: Record<string, never>
     Functions: Record<string, never>
     Enums: {
-      difficulty: Difficulty
       progress_status: ProgressStatus
       confidence_level: Confidence
     }
