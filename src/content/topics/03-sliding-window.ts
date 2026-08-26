@@ -19,8 +19,10 @@ The giveaway phrase is usually **"substring"**, **"subarray"**, or **"contiguous
 
 There are two flavors, and mixing them up is the #1 source of bugs:
 
-- **Fixed-size window** — the window length is given (k). You slide it one step at a time: add the new right element, remove the leaving left element, done. No growing or shrinking logic needed.
-- **Variable-size window** — you don't know the length in advance. You grow \`right\` until the window becomes *invalid* (or reaches the target), then shrink \`left\` until it's valid again, tracking the best window you've seen along the way.`,
+- **Fixed-size window** — the window length is given (k). You slide it one step at a time: add the new right element, remove the leaving left element, done. No growing or shrinking logic needed. *Likely follow-up: "what if k can vary at runtime?"* — you're now in variable-size territory.
+- **Variable-size window** — you don't know the length in advance. You grow \`right\` until the window becomes *invalid* (or reaches the target), then shrink \`left\` until it's valid again, tracking the best window you've seen along the way. *Likely follow-up: "count the number of valid windows, not just the best one"* — see the \`atMost(K)\` trick below.
+
+**The \`atMost(K)\` trick**: when asked for the count of subarrays with *exactly* K of something (distinct integers, odd numbers, etc.), it's usually easier to write a helper \`atMost(K)\` — count subarrays with **at most** K — and answer \`atMost(K) - atMost(K - 1)\`. Trying to track "exactly K" directly in one window is far more bug-prone than subtracting two "at most" windows.`,
   workedExample: {
     title: 'Longest Substring Without Repeating Characters',
     problem: `Given \`s = "abcabcbb"\`, find the length of the longest substring with no repeated characters. This is the canonical variable-size window.
@@ -61,9 +63,11 @@ Notice what did *not* happen: we never reset \`left\` back to \`right\`, and we 
     'Permutation in string is a fixed window equal to the pattern length — no growing/shrinking, just slide.',
     'Sliding window maximum needs a decreasing deque of indices, not a heap, to stay O(n).',
     'Watch empty strings/arrays and windows larger than the input.',
+    '"Exactly K" counting problems: don\'t try to track exact-K state directly — compute atMost(K) - atMost(K - 1) instead.',
   ],
   problems: [
     { id: 'best-time-to-buy-and-sell-stock', title: 'Best Time to Buy and Sell Stock', slug: 'best-time-to-buy-and-sell-stock', difficulty: 'easy' },
+    { id: 'minimum-size-subarray-sum', title: 'Minimum Size Subarray Sum', slug: 'minimum-size-subarray-sum', difficulty: 'medium' },
     { id: 'longest-substring-without-repeating-characters', title: 'Longest Substring Without Repeating Characters', slug: 'longest-substring-without-repeating-characters', difficulty: 'medium' },
     { id: 'longest-repeating-character-replacement', title: 'Longest Repeating Character Replacement', slug: 'longest-repeating-character-replacement', difficulty: 'medium' },
     { id: 'permutation-in-string', title: 'Permutation in String', slug: 'permutation-in-string', difficulty: 'medium' },

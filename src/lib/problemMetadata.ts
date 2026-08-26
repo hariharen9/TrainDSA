@@ -17,6 +17,22 @@ export const PROBLEM_METADATA: Record<string, ProblemMetadata> = {
     patterns: ['Hash Set', 'Early Return'],
     companies: ['Amazon', 'Apple', 'Microsoft', 'Google'],
   },
+  'contains-duplicate-ii': {
+    patterns: ['Hash Map', 'Sliding Window', 'Index Distance Bound'],
+    companies: ['Amazon', 'Google', 'Meta', 'Microsoft', 'Apple'],
+  },
+  'ransom-note': {
+    patterns: ['Frequency Map', 'Fixed-size Alphabet Array'],
+    companies: ['Amazon', 'Apple', 'Google', 'Microsoft', 'Meta'],
+  },
+  'isomorphic-strings': {
+    patterns: ['Bijective Hash Map', 'Last Seen Index Array'],
+    companies: ['Amazon', 'Google', 'Meta', 'Microsoft', 'Bloomberg'],
+  },
+  'valid-sudoku': {
+    patterns: ['Hash Set Verification', 'Row/Column/Box Encoding'],
+    companies: ['Amazon', 'Meta', 'Apple', 'Microsoft', 'Google', 'Uber'],
+  },
   'group-anagrams': {
     patterns: ['Sorted String Key', 'Frequency Signature Tuple'],
     companies: ['Meta', 'Amazon', 'Google', 'Microsoft', 'Bloomberg'],
@@ -25,9 +41,17 @@ export const PROBLEM_METADATA: Record<string, ProblemMetadata> = {
     patterns: ['Bucket Sort', 'Min-Heap', 'Frequency Map'],
     companies: ['Meta', 'Amazon', 'Google', 'Microsoft', 'Apple'],
   },
+  'encode-and-decode-strings': {
+    patterns: ['Delimiter Encoding', 'Length-Prefixed Chunking'],
+    companies: ['Google', 'Meta', 'Amazon', 'Microsoft', 'Apple', 'Bloomberg'],
+  },
   'product-of-array-except-self': {
     patterns: ['Prefix & Suffix Products', 'O(1) Space Accumulator'],
     companies: ['Meta', 'Amazon', 'Google', 'Microsoft', 'Apple', 'Uber'],
+  },
+  'subarray-sum-equals-k': {
+    patterns: ['Prefix Sum Map', 'Cumulative Frequency Lookup'],
+    companies: ['Meta', 'Google', 'Amazon', 'Microsoft', 'Bloomberg', 'Apple'],
   },
   'longest-consecutive-sequence': {
     patterns: ['Hash Set', 'Streak Root Check (num - 1)'],
@@ -42,6 +66,14 @@ export const PROBLEM_METADATA: Record<string, ProblemMetadata> = {
   'two-sum-ii': {
     patterns: ['Sorted Array', 'Converging Pointers'],
     companies: ['Amazon', 'Google', 'Meta', 'Microsoft'],
+  },
+  'move-zeroes': {
+    patterns: ['Same-Direction Partitioning', 'Read/Write Pointers', 'In-place Swap'],
+    companies: ['Meta', 'Amazon', 'Apple', 'Microsoft', 'Google', 'Bloomberg'],
+  },
+  'sort-colors': {
+    patterns: ['Dutch National Flag', 'Three-Way Partitioning', 'Two Pointers'],
+    companies: ['Meta', 'Amazon', 'Microsoft', 'Google', 'Apple', 'Bloomberg'],
   },
   '3sum': {
     patterns: ['Sort + Two Pointers', 'Duplicate Skipping'],
@@ -60,6 +92,10 @@ export const PROBLEM_METADATA: Record<string, ProblemMetadata> = {
   'best-time-to-buy-and-sell-stock': {
     patterns: ['Running Minimum', 'Greedy Single Pass'],
     companies: ['Amazon', 'Meta', 'Google', 'Microsoft', 'Apple', 'Bloomberg'],
+  },
+  'minimum-size-subarray-sum': {
+    patterns: ['Variable Sliding Window', 'Positive Sum Invariant'],
+    companies: ['Meta', 'Amazon', 'Google', 'Microsoft', 'Bloomberg'],
   },
   'longest-substring-without-repeating-characters': {
     patterns: ['Variable Sliding Window', 'Last Seen Index Map'],
@@ -107,6 +143,10 @@ export const PROBLEM_METADATA: Record<string, ProblemMetadata> = {
     patterns: ['Sort by Position', 'Monotonic Stack of Arrival Times'],
     companies: ['Google', 'Amazon', 'Meta'],
   },
+  'largest-rectangle-in-histogram': {
+    patterns: ['Monotonic Increasing Stack', 'Width Expansion Calculation'],
+    companies: ['Meta', 'Amazon', 'Google', 'Microsoft', 'Apple', 'Bloomberg', 'Uber'],
+  },
 
   // Binary Search
   'binary-search': {
@@ -116,6 +156,10 @@ export const PROBLEM_METADATA: Record<string, ProblemMetadata> = {
   'search-a-2d-matrix': {
     patterns: ['Virtual 1D Flattening', 'Matrix Binary Search'],
     companies: ['Amazon', 'Meta', 'Microsoft', 'Google'],
+  },
+  'koko-eating-bananas': {
+    patterns: ['Search on Answer Space', 'Monotonic Feasibility Predicate'],
+    companies: ['Google', 'Meta', 'Amazon', 'Microsoft', 'Apple', 'Bloomberg'],
   },
   'search-in-rotated-sorted-array': {
     patterns: ['Modified Binary Search', 'Sorted Half Identification'],
