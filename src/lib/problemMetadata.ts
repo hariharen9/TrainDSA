@@ -191,6 +191,10 @@ export const PROBLEM_METADATA: Record<string, ProblemMetadata> = {
     patterns: ['Floyd Tortoise & Hare (Fast/Slow)', 'Cycle Detection'],
     companies: ['Amazon', 'Meta', 'Microsoft', 'Google', 'Bloomberg'],
   },
+  'middle-of-the-linked-list': {
+    patterns: ['Floyd Tortoise & Hare (Fast/Slow)', 'Midpoint Walk'],
+    companies: ['Amazon', 'Google', 'Meta', 'Microsoft', 'Apple'],
+  },
   'reorder-list': {
     patterns: ['Find Midpoint (Fast/Slow)', 'Reverse Second Half', 'Merge Alternating'],
     companies: ['Meta', 'Amazon', 'Google', 'Microsoft'],
@@ -203,9 +207,17 @@ export const PROBLEM_METADATA: Record<string, ProblemMetadata> = {
     patterns: ['Hash Map Clone', 'Interleaving Nodes In-place'],
     companies: ['Meta', 'Amazon', 'Microsoft', 'Google', 'Bloomberg'],
   },
+  'add-two-numbers': {
+    patterns: ['Elementary Math Carry Simulation', 'Dummy Head'],
+    companies: ['Amazon', 'Meta', 'Google', 'Microsoft', 'Apple', 'Bloomberg'],
+  },
   'merge-k-sorted-lists': {
     patterns: ['Min-Heap of Node Heads', 'Divide & Conquer Merge'],
     companies: ['Meta', 'Amazon', 'Google', 'Microsoft', 'Apple', 'Uber'],
+  },
+  'reverse-nodes-in-k-group': {
+    patterns: ['In-place Subsegment Reversal', 'K-Sized Chunk Walk'],
+    companies: ['Meta', 'Amazon', 'Microsoft', 'Google', 'Apple', 'Bloomberg'],
   },
 
   // Trees
@@ -215,6 +227,14 @@ export const PROBLEM_METADATA: Record<string, ProblemMetadata> = {
   },
   'maximum-depth-of-binary-tree': {
     patterns: ['Tree DFS Recursion', 'BFS Level Order'],
+    companies: ['Amazon', 'Meta', 'Google', 'Microsoft', 'Apple'],
+  },
+  'diameter-of-binary-tree': {
+    patterns: ['Post-Order DFS', 'Global Max Diameter Aggregation'],
+    companies: ['Meta', 'Amazon', 'Google', 'Microsoft', 'Bloomberg'],
+  },
+  'balanced-binary-tree': {
+    patterns: ['Bottom-Up Height Checking', 'Early Pruning (-1 flag)'],
     companies: ['Amazon', 'Meta', 'Google', 'Microsoft', 'Apple'],
   },
   'same-tree': {
@@ -233,6 +253,10 @@ export const PROBLEM_METADATA: Record<string, ProblemMetadata> = {
     patterns: ['Queue BFS', 'Level Size Chunking'],
     companies: ['Meta', 'Amazon', 'Google', 'Microsoft', 'Bloomberg', 'Apple'],
   },
+  'binary-tree-right-side-view': {
+    patterns: ['Queue BFS Level Traversal', 'Rightmost Node Capture'],
+    companies: ['Meta', 'Amazon', 'Google', 'Bloomberg', 'Microsoft'],
+  },
   'validate-binary-search-tree': {
     patterns: ['DFS with (min, max) Window', 'In-Order Traversal Monotonicity'],
     companies: ['Meta', 'Amazon', 'Bloomberg', 'Microsoft', 'Google'],
@@ -245,9 +269,21 @@ export const PROBLEM_METADATA: Record<string, ProblemMetadata> = {
     patterns: ['Divide & Conquer', 'Hash Map Indexing of Inorder'],
     companies: ['Amazon', 'Meta', 'Google', 'Microsoft', 'Bloomberg'],
   },
+  'binary-tree-maximum-path-sum': {
+    patterns: ['Post-Order DFS', 'Global Max Path Sum', 'Negative Gain Pruning'],
+    companies: ['Meta', 'Amazon', 'Google', 'Microsoft', 'Apple', 'Bloomberg'],
+  },
+  'serialize-and-deserialize-binary-tree': {
+    patterns: ['Preorder DFS Serialization', 'Queue-Based Deserialization'],
+    companies: ['Meta', 'Amazon', 'Google', 'Microsoft', 'Uber'],
+  },
 
   // Tries
   'implement-trie': {
+    patterns: ['Prefix Tree', 'TrieNode Children Map/Array'],
+    companies: ['Google', 'Amazon', 'Microsoft', 'Meta', 'Apple'],
+  },
+  'implement-trie-prefix-tree': {
     patterns: ['Prefix Tree', 'TrieNode Children Map/Array'],
     companies: ['Google', 'Amazon', 'Microsoft', 'Meta', 'Apple'],
   },
@@ -508,6 +544,10 @@ export const PROBLEM_METADATA: Record<string, ProblemMetadata> = {
   'sum-of-two-integers': {
     patterns: ['Half Adder Bitwise Simulation (XOR Sum & AND Carry)'],
     companies: ['Meta', 'Amazon', 'Google', 'Microsoft'],
+  },
+  'reverse-integer': {
+    patterns: ['Modulo Math', '32-Bit Signed Integer Overflow Guard'],
+    companies: ['Amazon', 'Google', 'Meta', 'Microsoft', 'Apple', 'Bloomberg'],
   },
 }
 
