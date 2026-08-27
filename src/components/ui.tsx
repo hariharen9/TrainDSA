@@ -70,9 +70,9 @@ export function ProgressBar({
   label?: ReactNode
 }) {
   return (
-    <div className="space-y-1.5">
+    <div className="space-y-1.5 w-full">
       {label ? (
-        <div className="flex items-center justify-between text-xs text-muted">
+        <div className="flex items-center justify-between gap-3 text-xs text-muted w-full">
           {label}
         </div>
       ) : null}

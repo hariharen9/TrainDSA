@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { useState } from 'react'
-import { ArrowRight, ListRestart, Flame, Trophy, CheckCircle2, Route, Zap, Compass, Sparkles } from 'lucide-react'
+import { ArrowRight, Flame, Trophy, CheckCircle2, Route, Zap, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useTracker } from '../hooks/useTracker'
 import { ActivityHeatmap } from '../components/ActivityHeatmap'
@@ -35,7 +35,6 @@ export function DashboardPage() {
   const blind75Solved = problems.filter(
     (p) => BLIND_75_IDS.has(p.id) && progressByProblem.get(p.id)?.status === 'solved',
   ).length
-
 
   return (
     <div className="space-y-8">
@@ -147,12 +146,12 @@ export function DashboardPage() {
           <ProgressBar
             value={Math.round((blind75Solved / 75) * 100)}
             label={
-              <div className="flex items-center justify-between text-xs">
+              <>
                 <span className="text-muted">Blind 75 Solved</span>
                 <span className="font-semibold text-ink font-mono">
                   {blind75Solved}/75 ({Math.round((blind75Solved / 75) * 100)}%)
                 </span>
-              </div>
+              </>
             }
           />
         </div>
@@ -160,69 +159,6 @@ export function DashboardPage() {
 
       {/* Interview Readiness & Skill Radar */}
       <ReadinessRadar topicRows={rows} reviewCount={reviewEntries.length} />
-
-      {/* Review Queue Preview Card */}
-      <section className="rounded-3xl border border-line bg-panel p-5 sm:p-6 shadow-xs">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="flex size-9 items-center justify-center rounded-xl bg-gold-dim border border-gold/30">
-              <ListRestart className="size-4.5 text-gold" />
-            </div>
-            <div>
-              <h2 className="font-serif text-xl font-semibold text-ink">Active Recall Queue</h2>
-              <p className="text-xs text-muted">Struggled problems & 14-day spaced repetition queue.</p>
-            </div>
-          </div>
-          <Link
-            to="/review"
-            className="rounded-full border border-line bg-panel-2 px-3.5 py-1.5 text-xs font-semibold text-gold hover:border-gold/40 transition shadow-xs"
-          >
-            Open Queue →
-          </Link>
-        </div>
-
-        {reviewEntries.length === 0 ? (
-          <p className="mt-4 text-xs sm:text-sm text-muted">
-            Queue is currently empty! When you rate a problem as <strong className="text-hard">Struggled</strong> or haven't revisited a solve in 14 days, it automatically lands here.
-          </p>
-        ) : (
-          <div className="mt-4 flex items-center justify-between rounded-2xl border border-gold/30 bg-gold-dim/40 px-4 py-3 text-xs text-gold">
-            <span>
-              <strong>{reviewEntries.length} problem{reviewEntries.length === 1 ? '' : 's'}</strong> require reinforcement.
-            </span>
-            <Link to="/review" className="font-semibold underline">
-              Practice now
-            </Link>
-          </div>
-        )}
-      </section>
-
-      {/* 99% Coverage Thesis Callout Banner */}
-      <section className="relative overflow-hidden rounded-3xl border border-line bg-gradient-to-r from-panel via-panel-2/60 to-panel p-5 sm:p-6 shadow-xs">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2 text-xs uppercase font-semibold tracking-wider text-gold">
-              <Compass className="size-3.5" />
-              <span>The 99% Coverage Thesis</span>
-            </div>
-            <h3 className="font-serif text-lg sm:text-xl font-semibold text-ink">
-              Why 17 Topics & 119 Problems Cover ~99% of DSA Rounds
-            </h3>
-            <p className="text-xs sm:text-sm text-muted max-w-2xl">
-              Interviews are strictly 45 minutes — interviewers cannot test 100-line obscure algorithms. Every question is engineered around one of these 17 patterns.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setWhyModalOpen(true)}
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-gold/40 bg-gold-dim px-4 py-2 text-xs font-semibold text-gold transition hover:bg-gold hover:text-canvas shadow-xs cursor-pointer"
-          >
-            <span>View Pattern Mapping</span>
-            <ArrowRight className="size-3.5" />
-          </button>
-        </div>
-      </section>
 
       {/* Linear Curriculum Roadmap */}
       <section className="space-y-4">
@@ -238,7 +174,7 @@ export function DashboardPage() {
             className="self-start sm:self-auto text-xs text-gold hover:underline font-medium inline-flex items-center gap-1 cursor-pointer"
           >
             <Sparkles className="size-3.5" />
-            <span>Why 17 Topics?</span>
+            <span>Why these 17 Topics?</span>
           </button>
         </div>
 
@@ -248,13 +184,12 @@ export function DashboardPage() {
             return (
               <li key={row.topic.id} className={locked ? 'opacity-50' : ''}>
                 <span
-                  className={`absolute -left-[5.5px] mt-3 size-2.5 rounded-full ring-4 ring-canvas ${
-                    row.state === 'completed'
+                  className={`absolute -left-[5.5px] mt-3 size-2.5 rounded-full ring-4 ring-canvas ${row.state === 'completed'
                       ? 'bg-easy'
                       : row.state === 'in_progress' || row.state === 'not_started'
                         ? 'bg-gold'
                         : 'bg-line'
-                  }`}
+                    }`}
                 />
                 <Link
                   to={`/topic/${row.topic.id}`}

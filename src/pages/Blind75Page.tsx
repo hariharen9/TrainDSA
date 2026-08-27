@@ -219,14 +219,14 @@ export function Blind75Page() {
           <ProgressBar
             value={stats.percent}
             label={
-              <div className="flex items-center justify-between text-xs font-medium">
+              <>
                 <span className="flex items-center gap-1.5 text-ink font-semibold">
                   <Trophy className="size-3.5 text-gold" /> Overall Progress
                 </span>
                 <span className="text-gold font-mono">
                   {stats.solved}/{stats.total} Solved ({stats.percent}%)
                 </span>
-              </div>
+              </>
             }
           />
 
