@@ -1,9 +1,11 @@
 import type { ReactNode } from 'react'
-import { ArrowRight, ListRestart, Flame, Trophy, CheckCircle2, Route, Zap } from 'lucide-react'
+import { useState } from 'react'
+import { ArrowRight, ListRestart, Flame, Trophy, CheckCircle2, Route, Zap, Compass, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useTracker } from '../hooks/useTracker'
 import { ActivityHeatmap } from '../components/ActivityHeatmap'
 import { ReadinessRadar } from '../components/ReadinessRadar'
+import { WhyCurriculumModal } from '../components/WhyCurriculumModal'
 import { ProgressBar } from '../components/ui'
 import { BLIND_75_IDS } from '../data/blind75'
 import {
@@ -22,6 +24,7 @@ const stateLabel = {
 
 export function DashboardPage() {
   const { topics, problems, progressByProblem, streakDates, reviewEntries, error } = useTracker()
+  const [whyModalOpen, setWhyModalOpen] = useState(false)
 
   const rows = buildTopicProgress(topics, problems, progressByProblem)
   const active = currentTopic(rows)
@@ -194,11 +197,49 @@ export function DashboardPage() {
         )}
       </section>
 
+      {/* 99% Coverage Thesis Callout Banner */}
+      <section className="relative overflow-hidden rounded-3xl border border-line bg-gradient-to-r from-panel via-panel-2/60 to-panel p-5 sm:p-6 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 text-xs uppercase font-semibold tracking-wider text-gold">
+              <Compass className="size-3.5" />
+              <span>The 99% Coverage Thesis</span>
+            </div>
+            <h3 className="font-serif text-lg sm:text-xl font-semibold text-ink">
+              Why 17 Topics & 119 Problems Cover ~99% of DSA Rounds
+            </h3>
+            <p className="text-xs sm:text-sm text-muted max-w-2xl">
+              Interviews are strictly 45 minutes — interviewers cannot test 100-line obscure algorithms. Every question is engineered around one of these 17 patterns.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setWhyModalOpen(true)}
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-gold/40 bg-gold-dim px-4 py-2 text-xs font-semibold text-gold transition hover:bg-gold hover:text-canvas shadow-xs cursor-pointer"
+          >
+            <span>View Pattern Mapping</span>
+            <ArrowRight className="size-3.5" />
+          </button>
+        </div>
+      </section>
+
       {/* Linear Curriculum Roadmap */}
       <section className="space-y-4">
-        <div>
-          <h2 className="font-serif text-2xl font-semibold text-ink">Curriculum Roadmap</h2>
-          <p className="text-xs sm:text-sm text-muted">17 foundational topics in monotonic order. Focus on one topic at a time.</p>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div>
+            <h2 className="font-serif text-2xl font-semibold text-ink">Curriculum Roadmap</h2>
+            <p className="text-xs sm:text-sm text-muted">17 foundational topics in monotonic order. Focus on one topic at a time.</p>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setWhyModalOpen(true)}
+            className="self-start sm:self-auto text-xs text-gold hover:underline font-medium inline-flex items-center gap-1 cursor-pointer"
+          >
+            <Sparkles className="size-3.5" />
+            <span>Why 17 Topics?</span>
+          </button>
         </div>
 
         <ol className="relative mt-4 space-y-3 border-l border-line pl-5 sm:pl-6">
@@ -242,6 +283,12 @@ export function DashboardPage() {
           })}
         </ol>
       </section>
+
+      {/* Why 17 Topics & 99% Coverage Modal */}
+      <WhyCurriculumModal
+        isOpen={whyModalOpen}
+        onClose={() => setWhyModalOpen(false)}
+      />
     </div>
   )
 }

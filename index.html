@@ -24,7 +24,7 @@
       rel="stylesheet"
     />
 
-    <!-- Immediate theme application to prevent FOUC -->
+    <!-- Immediate theme application to prevent FOUC & Netlify Drawer removal -->
     <script>
       (function() {
         try {
@@ -38,6 +38,43 @@
             document.documentElement.classList.add('light');
           }
         } catch (e) {}
+
+        // Aggressively remove Netlify Drawer / Feedback badge overlays that block mobile nav
+        function purgeNetlifyOverlays() {
+          try {
+            var selectors = [
+              '#netlify-drawer',
+              '#netlify-feedback-drawer',
+              '#netlify-identity-widget',
+              '[data-netlify-drawer]',
+              '[data-netlify-feedback]',
+              '[class*="netlify-drawer"]',
+              '[class*="NetlifyFeedback"]',
+              '[class*="netlify-feedback"]',
+              '[id*="netlify-drawer"]',
+              '[id*="netlify-feedback"]',
+              'iframe[src*="netlify"]',
+              'iframe[title*="Netlify"]',
+              'iframe[title*="feedback" i]',
+              'div[data-netlify="true"]'
+            ];
+            var nodes = document.querySelectorAll(selectors.join(', '));
+            for (var i = 0; i < nodes.length; i++) {
+              nodes[i].remove();
+            }
+          } catch (e) {}
+        }
+
+        if (typeof window !== 'undefined') {
+          window.addEventListener('DOMContentLoaded', purgeNetlifyOverlays);
+          window.addEventListener('load', purgeNetlifyOverlays);
+          try {
+            var observer = new MutationObserver(function() {
+              purgeNetlifyOverlays();
+            });
+            observer.observe(document.documentElement, { childList: true, subtree: true });
+          } catch (e) {}
+        }
       })();
     </script>
   </head>

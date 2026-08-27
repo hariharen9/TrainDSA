@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
-import { Flame, ListRestart, LogOut, Route, Search, Zap } from 'lucide-react'
+import { Compass, Flame, ListRestart, LogOut, Route, Search, Zap } from 'lucide-react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { Logo } from './Logo'
 import { SearchModal } from './SearchModal'
 import { ThemeToggle } from './ThemeToggle'
+import { WhyCurriculumModal } from './WhyCurriculumModal'
 import { useAuth } from '../hooks/useAuth'
 import { useTracker } from '../hooks/useTracker'
 import { consecutiveStreak } from '../lib/progress'
@@ -24,6 +25,7 @@ export function AppShell() {
   const { user, signOut } = useAuth()
   const { streakDates, reviewEntries } = useTracker()
   const [searchOpen, setSearchOpen] = useState(false)
+  const [whyModalOpen, setWhyModalOpen] = useState(false)
   const streak = consecutiveStreak(streakDates)
   const reviewCount = reviewEntries.length
 
@@ -72,6 +74,15 @@ export function AppShell() {
                   </span>
                 )}
               </NavLink>
+              <button
+                type="button"
+                onClick={() => setWhyModalOpen(true)}
+                className="relative flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition text-muted hover:text-ink hover:bg-panel-2/60 cursor-pointer"
+                title="Why 17 Topics & 119 Problems Cover 99% of DSA Rounds"
+              >
+                <Compass className="size-3.5 text-gold" />
+                <span>Why 17?</span>
+              </button>
             </nav>
           </div>
 
@@ -124,7 +135,7 @@ export function AppShell() {
       </main>
 
       {/* Mobile Bottom Navigation Bar (<640px) */}
-      <nav className="fixed inset-x-0 bottom-0 z-30 flex sm:hidden border-t border-line/80 bg-panel/95 backdrop-blur-lg safe-bottom px-2 py-1 shadow-lg">
+      <nav className="fixed inset-x-0 bottom-0 z-50 pointer-events-auto flex sm:hidden border-t border-line/80 bg-panel/95 backdrop-blur-lg safe-bottom px-2 py-1 shadow-2xl">
         <NavLink to="/" end className={mobileLinkClass}>
           {({ isActive }) => (
             <>
@@ -177,6 +188,9 @@ export function AppShell() {
 
       {/* Search Modal */}
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+
+      {/* Why 17 Topics Modal */}
+      <WhyCurriculumModal isOpen={whyModalOpen} onClose={() => setWhyModalOpen(false)} />
     </div>
   )
 }

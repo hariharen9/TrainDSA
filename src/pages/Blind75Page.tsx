@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
+  Compass,
   Filter,
   Layers,
   Search,
@@ -11,6 +12,7 @@ import {
 } from 'lucide-react'
 import { ProblemCard } from '../components/ProblemCard'
 import { ProgressBar } from '../components/ui'
+import { WhyCurriculumModal } from '../components/WhyCurriculumModal'
 import { BLIND_75_IDS } from '../data/blind75'
 import { useAuth } from '../hooks/useAuth'
 import { useTracker } from '../hooks/useTracker'
@@ -23,6 +25,7 @@ export function Blind75Page() {
   const { user } = useAuth()
   const { problems, topics, progressByProblem, updateProgress, loading, error } = useTracker()
 
+  const [whyModalOpen, setWhyModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
   const [diffFilter, setDiffFilter] = useState<DiffFilter>('all')
@@ -190,6 +193,14 @@ export function Blind75Page() {
             <p className="mt-2 max-w-2xl text-sm text-muted">
               The high-yield 75 questions designed for direct problem solving. Jump straight into coding without walking through the full theory chapters.
             </p>
+            <button
+              type="button"
+              onClick={() => setWhyModalOpen(true)}
+              className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-gold hover:underline cursor-pointer"
+            >
+              <Compass className="size-3.5" />
+              <span>Why these 17 patterns cover ~99% of DSA rounds →</span>
+            </button>
           </div>
 
           {/* Quick Random Action */}
@@ -447,6 +458,12 @@ export function Blind75Page() {
           ))}
         </div>
       )}
+
+      {/* Why 17 Topics & 99% Coverage Modal */}
+      <WhyCurriculumModal
+        isOpen={whyModalOpen}
+        onClose={() => setWhyModalOpen(false)}
+      />
     </div>
   )
 }
