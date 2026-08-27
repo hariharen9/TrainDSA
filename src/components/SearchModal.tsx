@@ -1,9 +1,10 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
-import { Search, X, Route, CheckCircle2, Circle, Clock, Building2, Tag, ArrowRight } from 'lucide-react'
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
+import { Search, X, Route, CheckCircle2, Circle, Clock, Building2, Tag, ArrowRight, Zap } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useTracker } from '../hooks/useTracker'
 import { ALL_COMPANIES, ALL_PATTERNS, PROBLEM_METADATA } from '../lib/problemMetadata'
 import { difficultyClass, difficultyLabel } from '../lib/labels'
+import { BLIND_75_IDS } from '../data/blind75'
 import type { Topic } from '../lib/types'
 
 type SearchModalProps = {
@@ -21,6 +22,7 @@ type SearchResultItem = {
   status?: 'unattempted' | 'attempted' | 'solved'
   patterns?: string[]
   companies?: string[]
+  isBlind75?: boolean
 }
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
@@ -113,6 +115,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           status,
           patterns: meta.patterns,
           companies: meta.companies,
+          isBlind75: BLIND_75_IDS.has(p.id),
         })
       }
     }
@@ -120,36 +123,44 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     return list.slice(0, 30)
   }, [query, selectedCompany, selectedPattern, topics, problems, progressByProblem, topicMap])
 
-  const handleSelect = (item: SearchResultItem) => {
-    onClose()
-    navigate(`/topic/${item.topicId}`)
-  }
+  const handleSelect = useCallback(
+    (item: SearchResultItem) => {
+      onClose()
+      navigate(`/topic/${item.topicId}`)
+    },
+    [navigate, onClose],
+  )
 
   // Keyboard arrow selection
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowDown') {
-      e.preventDefault()
-      setSelectedIndex((prev) => (prev + 1) % Math.max(1, results.length))
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault()
-      setSelectedIndex((prev) => (prev - 1 + results.length) % Math.max(1, results.length))
-    } else if (e.key === 'Enter' && results[selectedIndex]) {
-      e.preventDefault()
-      handleSelect(results[selectedIndex])
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isOpen || results.length === 0) return
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault()
+        setSelectedIndex((prev) => (prev + 1) % results.length)
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault()
+        setSelectedIndex((prev) => (prev - 1 + results.length) % results.length)
+      } else if (e.key === 'Enter') {
+        e.preventDefault()
+        const selected = results[selectedIndex]
+        if (selected) handleSelect(selected)
+      }
     }
-  }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen, results, selectedIndex, handleSelect])
 
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center p-4 sm:p-6 md:p-20 bg-canvas/80 backdrop-blur-md animate-fade-in">
-      <div
-        className="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-line bg-panel shadow-2xl transition-all"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Search Input Bar */}
-        <div className="flex items-center gap-3 border-b border-line px-4 py-3.5 sm:px-5">
-          <Search className="size-5 text-gold shrink-0" />
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/60 backdrop-blur-xs p-4 sm:p-6 md:p-20">
+      <div className="w-full max-w-2xl overflow-hidden rounded-3xl border border-line bg-panel shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+        {/* Search Header */}
+        <div className="relative border-b border-line p-4">
+          <Search className="absolute left-6 top-1/2 size-5 -translate-y-1/2 text-gold" />
           <input
             ref={inputRef}
             type="text"
@@ -158,35 +169,36 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               setQuery(e.target.value)
               setSelectedIndex(0)
             }}
-            onKeyDown={handleKeyDown}
-            placeholder="Search problems, topics, FAANG tags, patterns, or notes (e.g. 'Two Sum', 'Google', 'Sliding Window')…"
-            className="flex-1 bg-transparent text-sm sm:text-base text-ink outline-none placeholder:text-muted/60"
+            placeholder="Search problems, patterns, companies, topics…"
+            className="w-full bg-transparent pl-10 pr-10 text-base font-medium text-ink placeholder:text-muted/60 focus:outline-none"
           />
-          {query && (
-            <button
-              type="button"
-              onClick={() => setQuery('')}
-              className="text-muted hover:text-ink transition cursor-pointer p-1"
-            >
-              <X className="size-4" />
-            </button>
-          )}
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg border border-line px-2 py-0.5 text-[11px] font-mono text-muted hover:text-ink transition cursor-pointer"
+            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-1.5 text-muted hover:bg-panel-2 hover:text-ink transition cursor-pointer"
           >
-            ESC
+            <X className="size-4" />
           </button>
         </div>
 
-        {/* Company & Pattern Filter Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto border-b border-line/60 bg-panel-2/40 px-4 py-2 text-xs scrollbar-none">
-          <span className="text-[10px] uppercase font-semibold text-muted shrink-0 flex items-center gap-1 mr-1">
-            <Building2 className="size-3 text-gold" /> Filter:
+        {/* Company Filter Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto px-4 py-2 border-b border-line/60 no-scrollbar text-xs bg-panel-2/30">
+          <span className="text-[11px] font-semibold text-muted uppercase tracking-wider shrink-0 mr-1">
+            <Building2 className="size-3 inline mr-1 text-gold" /> Company:
           </span>
-
-          {ALL_COMPANIES.slice(0, 6).map((comp) => {
+          <button
+            type="button"
+            onClick={() => {
+              setSelectedCompany(null)
+              setSelectedIndex(0)
+            }}
+            className={`rounded-full px-2.5 py-0.5 text-[11px] font-medium transition shrink-0 cursor-pointer ${
+              !selectedCompany ? 'bg-gold text-canvas font-semibold shadow-xs' : 'border border-line bg-panel text-muted hover:text-ink'
+            }`}
+          >
+            All
+          </button>
+          {ALL_COMPANIES.slice(0, 10).map((comp) => {
             const active = selectedCompany === comp
             return (
               <button
@@ -197,19 +209,33 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   setSelectedIndex(0)
                 }}
                 className={`rounded-full px-2.5 py-0.5 text-[11px] font-medium transition shrink-0 cursor-pointer ${
-                  active
-                    ? 'bg-gold text-canvas font-semibold shadow-xs'
-                    : 'border border-line bg-panel text-muted hover:text-ink'
+                  active ? 'bg-gold text-canvas font-semibold shadow-xs' : 'border border-line bg-panel text-muted hover:text-ink'
                 }`}
               >
                 {comp}
               </button>
             )
           })}
+        </div>
 
-          <div className="h-4 w-px bg-line shrink-0 mx-1" />
-
-          {ALL_PATTERNS.slice(0, 5).map((pat) => {
+        {/* Pattern Filter Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto px-4 py-2 border-b border-line/60 no-scrollbar text-xs bg-panel-2/10">
+          <span className="text-[11px] font-semibold text-muted uppercase tracking-wider shrink-0 mr-1">
+            <Tag className="size-3 inline mr-1 text-gold" /> Pattern:
+          </span>
+          <button
+            type="button"
+            onClick={() => {
+              setSelectedPattern(null)
+              setSelectedIndex(0)
+            }}
+            className={`rounded-full px-2.5 py-0.5 text-[11px] font-medium transition shrink-0 cursor-pointer ${
+              !selectedPattern ? 'bg-ink text-canvas font-semibold shadow-xs' : 'border border-line bg-panel text-muted hover:text-ink'
+            }`}
+          >
+            All
+          </button>
+          {ALL_PATTERNS.slice(0, 10).map((pat) => {
             const active = selectedPattern === pat
             return (
               <button
@@ -220,12 +246,9 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   setSelectedIndex(0)
                 }}
                 className={`rounded-full px-2.5 py-0.5 text-[11px] font-medium transition shrink-0 cursor-pointer ${
-                  active
-                    ? 'bg-ink text-canvas font-semibold shadow-xs'
-                    : 'border border-line bg-panel text-muted hover:text-ink'
+                  active ? 'bg-ink text-canvas font-semibold shadow-xs' : 'border border-line bg-panel text-muted hover:text-ink'
                 }`}
               >
-                <Tag className="size-2.5 inline mr-1" />
                 {pat}
               </button>
             )
@@ -246,7 +269,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 }`}
               >
                 <div className="min-w-0 flex-1 space-y-1">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     {item.type === 'topic' ? (
                       <span className="flex size-5 items-center justify-center rounded-md bg-gold/20 text-gold">
                         <Route className="size-3.5" />
@@ -270,6 +293,12 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                         )}`}
                       >
                         {difficultyLabel(item.difficulty)}
+                      </span>
+                    )}
+
+                    {item.isBlind75 && (
+                      <span className="inline-flex items-center gap-0.5 rounded-full border border-gold/40 bg-gold-dim px-1.5 py-0.2 text-[9px] font-bold text-gold uppercase tracking-wider">
+                        <Zap className="size-2.5 fill-gold" /> 75
                       </span>
                     )}
 

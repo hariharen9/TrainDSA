@@ -1,10 +1,11 @@
 import type { ReactNode } from 'react'
-import { ArrowRight, ListRestart, Flame, Trophy, CheckCircle2, Route } from 'lucide-react'
+import { ArrowRight, ListRestart, Flame, Trophy, CheckCircle2, Route, Zap } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useTracker } from '../hooks/useTracker'
 import { ActivityHeatmap } from '../components/ActivityHeatmap'
 import { ReadinessRadar } from '../components/ReadinessRadar'
 import { ProgressBar } from '../components/ui'
+import { BLIND_75_IDS } from '../data/blind75'
 import {
   buildTopicProgress,
   consecutiveStreak,
@@ -28,6 +29,9 @@ export function DashboardPage() {
   const streak = consecutiveStreak(streakDates)
   const totalSolved = rows.reduce((s, r) => s + r.solved, 0)
   const totalProblems = rows.reduce((s, r) => s + r.total, 0)
+  const blind75Solved = problems.filter(
+    (p) => BLIND_75_IDS.has(p.id) && progressByProblem.get(p.id)?.status === 'solved',
+  ).length
 
 
   return (
@@ -106,6 +110,50 @@ export function DashboardPage() {
 
       {/* 365-Day Activity Heatmap */}
       <ActivityHeatmap streakDates={streakDates} totalSolved={totalSolved} />
+
+      {/* Fast-Track Blind 75 Card */}
+      <section className="overflow-hidden rounded-3xl border border-gold/30 bg-gradient-to-br from-panel via-panel to-gold-dim/20 p-5 sm:p-6 shadow-xs">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-3">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-gold text-canvas shadow-xs">
+              <Zap className="size-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="font-serif text-xl font-semibold text-ink">Curated Blind 75 Mode</h2>
+                <span className="rounded-full border border-gold/40 bg-gold-dim px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gold">
+                  Fast-Track
+                </span>
+              </div>
+              <p className="mt-1 text-xs text-muted max-w-xl">
+                Just want to solve problems directly without reading full concept chapters? Work through our curated set of 75 highest-yield interview problems.
+              </p>
+            </div>
+          </div>
+
+          <Link
+            to="/blind75"
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-gold px-4 py-2 text-xs font-semibold text-canvas transition hover:opacity-90 shadow-xs"
+          >
+            <span>Practice Blind 75</span>
+            <ArrowRight className="size-3.5" />
+          </Link>
+        </div>
+
+        <div className="mt-4 pt-4 border-t border-line/60">
+          <ProgressBar
+            value={Math.round((blind75Solved / 75) * 100)}
+            label={
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-muted">Blind 75 Solved</span>
+                <span className="font-semibold text-ink font-mono">
+                  {blind75Solved}/75 ({Math.round((blind75Solved / 75) * 100)}%)
+                </span>
+              </div>
+            }
+          />
+        </div>
+      </section>
 
       {/* Interview Readiness & Skill Radar */}
       <ReadinessRadar topicRows={rows} reviewCount={reviewEntries.length} />

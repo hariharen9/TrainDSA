@@ -5,6 +5,7 @@ import { AuthProvider } from './hooks/useAuth'
 import { ThemeProvider } from './hooks/useTheme'
 import { TrackerProvider } from './hooks/useTracker'
 import { AuthPage } from './pages/AuthPage'
+import { Blind75Page } from './pages/Blind75Page'
 import { DashboardPage } from './pages/DashboardPage'
 import { ReviewPage } from './pages/ReviewPage'
 import { SetupPage } from './pages/SetupPage'
@@ -28,6 +29,8 @@ export default function App() {
               }
             >
               <Route path="/" element={<DashboardPage />} />
+              <Route path="/blind75" element={<Blind75Page />} />
+              <Route path="/practice" element={<Navigate to="/blind75" replace />} />
               <Route path="/topic/:topicId" element={<TopicPage />} />
               <Route path="/review" element={<ReviewPage />} />
             </Route>

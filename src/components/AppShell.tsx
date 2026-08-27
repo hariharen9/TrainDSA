@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Flame, ListRestart, LogOut, Route, Search } from 'lucide-react'
+import { Flame, ListRestart, LogOut, Route, Search, Zap } from 'lucide-react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { Logo } from './Logo'
 import { SearchModal } from './SearchModal'
@@ -58,6 +58,10 @@ export function AppShell() {
               <NavLink to="/" end className={desktopLinkClass}>
                 <Route className="size-3.5" />
                 <span>Path</span>
+              </NavLink>
+              <NavLink to="/blind75" className={desktopLinkClass}>
+                <Zap className="size-3.5" />
+                <span>Blind 75</span>
               </NavLink>
               <NavLink to="/review" className={desktopLinkClass}>
                 <ListRestart className="size-3.5" />
@@ -128,6 +132,17 @@ export function AppShell() {
                 <Route className="size-4" />
               </div>
               <span>Path</span>
+            </>
+          )}
+        </NavLink>
+
+        <NavLink to="/blind75" className={mobileLinkClass}>
+          {({ isActive }) => (
+            <>
+              <div className={`flex size-7 items-center justify-center rounded-full transition ${isActive ? 'bg-gold/20' : ''}`}>
+                <Zap className="size-4" />
+              </div>
+              <span>Blind 75</span>
             </>
           )}
         </NavLink>
