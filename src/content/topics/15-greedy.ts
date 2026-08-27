@@ -111,13 +111,9 @@ Time: O(N), Space: O(1).`,
   ],
   problems: [
     { id: 'maximum-subarray', title: 'Maximum Subarray', slug: 'maximum-subarray', difficulty: 'medium' },
-    { id: 'maximum-product-subarray', title: 'Maximum Product Subarray', slug: 'maximum-product-subarray', difficulty: 'medium' },
     { id: 'jump-game', title: 'Jump Game', slug: 'jump-game', difficulty: 'medium' },
     { id: 'jump-game-ii', title: 'Jump Game II', slug: 'jump-game-ii', difficulty: 'medium' },
     { id: 'gas-station', title: 'Gas Station', slug: 'gas-station', difficulty: 'medium' },
-    { id: 'hand-of-straights', title: 'Hand of Straights', slug: 'hand-of-straights', difficulty: 'medium' },
-    { id: 'merge-triplets-to-form-target-triplet', title: 'Merge Triplets to Form Target Triplet', slug: 'merge-triplets-to-form-target-triplet', difficulty: 'medium' },
     { id: 'partition-labels', title: 'Partition Labels', slug: 'partition-labels', difficulty: 'medium' },
-    { id: 'valid-parenthesis-string', title: 'Valid Parenthesis String', slug: 'valid-parenthesis-string', difficulty: 'medium' },
   ],
 }

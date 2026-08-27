@@ -67,7 +67,6 @@ Notice what did *not* happen: we never reset \`left\` back to \`right\`, and we 
   ],
   problems: [
     { id: 'best-time-to-buy-and-sell-stock', title: 'Best Time to Buy and Sell Stock', slug: 'best-time-to-buy-and-sell-stock', difficulty: 'easy' },
-    { id: 'minimum-size-subarray-sum', title: 'Minimum Size Subarray Sum', slug: 'minimum-size-subarray-sum', difficulty: 'medium' },
     { id: 'longest-substring-without-repeating-characters', title: 'Longest Substring Without Repeating Characters', slug: 'longest-substring-without-repeating-characters', difficulty: 'medium' },
     { id: 'longest-repeating-character-replacement', title: 'Longest Repeating Character Replacement', slug: 'longest-repeating-character-replacement', difficulty: 'medium' },
     { id: 'permutation-in-string', title: 'Permutation in String', slug: 'permutation-in-string', difficulty: 'medium' },

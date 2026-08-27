@@ -126,6 +126,5 @@ Time: O(N log N), Space: O(N).`,
     { id: 'merge-intervals', title: 'Merge Intervals', slug: 'merge-intervals', difficulty: 'medium' },
     { id: 'non-overlapping-intervals', title: 'Non-overlapping Intervals', slug: 'non-overlapping-intervals', difficulty: 'medium' },
     { id: 'meeting-rooms-ii', title: 'Meeting Rooms II', slug: 'meeting-rooms-ii', difficulty: 'medium' },
-    { id: 'minimum-interval-to-include-each-query', title: 'Minimum Interval to Include Each Query', slug: 'minimum-interval-to-include-each-query', difficulty: 'hard' },
   ],
 }

@@ -70,7 +70,6 @@ Remaining stack indices (6, 7) never find a warmer day, so their \`answer\` stay
     { id: 'evaluate-reverse-polish-notation', title: 'Evaluate Reverse Polish Notation', slug: 'evaluate-reverse-polish-notation', difficulty: 'medium' },
     { id: 'generate-parentheses', title: 'Generate Parentheses', slug: 'generate-parentheses', difficulty: 'medium' },
     { id: 'daily-temperatures', title: 'Daily Temperatures', slug: 'daily-temperatures', difficulty: 'medium' },
-    { id: 'online-stock-span', title: 'Online Stock Span', slug: 'online-stock-span', difficulty: 'medium' },
     { id: 'car-fleet', title: 'Car Fleet', slug: 'car-fleet', difficulty: 'medium' },
     { id: 'largest-rectangle-in-histogram', title: 'Largest Rectangle in Histogram', slug: 'largest-rectangle-in-histogram', difficulty: 'hard' },
   ],

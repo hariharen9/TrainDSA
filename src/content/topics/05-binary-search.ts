@@ -74,10 +74,7 @@ Notice the pattern: \`hi = mid\` (never \`mid - 1\`) because \`mid\` itself migh
     { id: 'koko-eating-bananas', title: 'Koko Eating Bananas', slug: 'koko-eating-bananas', difficulty: 'medium' },
     { id: 'search-in-rotated-sorted-array', title: 'Search in Rotated Sorted Array', slug: 'search-in-rotated-sorted-array', difficulty: 'medium' },
     { id: 'find-minimum-in-rotated-sorted-array', title: 'Find Minimum in Rotated Sorted Array', slug: 'find-minimum-in-rotated-sorted-array', difficulty: 'medium' },
-    { id: 'find-peak-element', title: 'Find Peak Element', slug: 'find-peak-element', difficulty: 'medium' },
-    { id: 'capacity-to-ship-packages-within-d-days', title: 'Capacity To Ship Packages Within D Days', slug: 'capacity-to-ship-packages-within-d-days', difficulty: 'medium' },
     { id: 'time-based-key-value-store', title: 'Time Based Key-Value Store', slug: 'time-based-key-value-store', difficulty: 'medium' },
-    { id: 'split-array-largest-sum', title: 'Split Array Largest Sum', slug: 'split-array-largest-sum', difficulty: 'hard' },
     { id: 'median-of-two-sorted-arrays', title: 'Median of Two Sorted Arrays', slug: 'median-of-two-sorted-arrays', difficulty: 'hard' },
   ],
 }
