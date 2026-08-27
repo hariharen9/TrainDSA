@@ -135,6 +135,8 @@ Time: O(N) linear time, Space: O(N) for output array.`,
     { id: 'reverse-bits', title: 'Reverse Bits', slug: 'reverse-bits', difficulty: 'easy' },
     { id: 'missing-number', title: 'Missing Number', slug: 'missing-number', difficulty: 'easy' },
     { id: 'sum-of-two-integers', title: 'Sum of Two Integers', slug: 'sum-of-two-integers', difficulty: 'medium' },
+    { id: 'subsets', title: 'Subsets', slug: 'subsets', difficulty: 'medium' },
+    { id: 'maximum-product-of-word-lengths', title: 'Maximum Product of Word Lengths', slug: 'maximum-product-of-word-lengths', difficulty: 'medium' },
     { id: 'reverse-integer', title: 'Reverse Integer', slug: 'reverse-integer', difficulty: 'medium' },
   ],
 }

@@ -196,5 +196,7 @@ Common interviewer follow-up: "What if nums is sorted and you need O(1) extra sp
     { id: 'product-of-array-except-self', title: 'Product of Array Except Self', slug: 'product-of-array-except-self', difficulty: 'medium' },
     { id: 'subarray-sum-equals-k', title: 'Subarray Sum Equals K', slug: 'subarray-sum-equals-k', difficulty: 'medium' },
     { id: 'longest-consecutive-sequence', title: 'Longest Consecutive Sequence', slug: 'longest-consecutive-sequence', difficulty: 'medium' },
+    { id: '4sum-ii', title: '4Sum II', slug: '4sum-ii', difficulty: 'medium' },
+    { id: 'sort-characters-by-frequency', title: 'Sort Characters By Frequency', slug: 'sort-characters-by-frequency', difficulty: 'medium' },
   ],
 }

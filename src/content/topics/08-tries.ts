@@ -143,6 +143,7 @@ Time Complexity: O(L) for all operations. Space: O(L) per inserted word.`,
   problems: [
     { id: 'implement-trie-prefix-tree', title: 'Implement Trie (Prefix Tree)', slug: 'implement-trie-prefix-tree', difficulty: 'medium' },
     { id: 'design-add-and-search-words-data-structure', title: 'Design Add and Search Words Data Structure', slug: 'design-add-and-search-words-data-structure', difficulty: 'medium' },
+    { id: 'maximum-xor-of-two-numbers-in-an-array', title: 'Maximum XOR of Two Numbers in an Array', slug: 'maximum-xor-of-two-numbers-in-an-array', difficulty: 'medium' },
     { id: 'word-search-ii', title: 'Word Search II', slug: 'word-search-ii', difficulty: 'hard' },
   ],
 }

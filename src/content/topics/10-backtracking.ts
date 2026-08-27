@@ -162,6 +162,7 @@ Result: [[2, 2, 3], [7]]. Time: O(2^(target/min_val)), Space: O(target/min_val) 
     { id: 'combination-sum', title: 'Combination Sum', slug: 'combination-sum', difficulty: 'medium' },
     { id: 'combination-sum-ii', title: 'Combination Sum II', slug: 'combination-sum-ii', difficulty: 'medium' },
     { id: 'permutations', title: 'Permutations', slug: 'permutations', difficulty: 'medium' },
+    { id: 'permutations-ii', title: 'Permutations II', slug: 'permutations-ii', difficulty: 'medium' },
     { id: 'subsets-ii', title: 'Subsets II', slug: 'subsets-ii', difficulty: 'medium' },
     { id: 'word-search', title: 'Word Search', slug: 'word-search', difficulty: 'medium' },
     { id: 'palindrome-partitioning', title: 'Palindrome Partitioning', slug: 'palindrome-partitioning', difficulty: 'medium' },

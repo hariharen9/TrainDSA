@@ -138,5 +138,6 @@ Time: O(V + E), Space: O(V + E).`,
     { id: 'graph-valid-tree', title: 'Graph Valid Tree', slug: 'graph-valid-tree', difficulty: 'medium' },
     { id: 'number-of-connected-components-in-an-undirected-graph', title: 'Number of Connected Components in an Undirected Graph', slug: 'number-of-connected-components-in-an-undirected-graph', difficulty: 'medium' },
     { id: 'word-ladder', title: 'Word Ladder', slug: 'word-ladder', difficulty: 'hard' },
+    { id: 'alien-dictionary', title: 'Alien Dictionary', slug: 'alien-dictionary', difficulty: 'hard' },
   ],
 }

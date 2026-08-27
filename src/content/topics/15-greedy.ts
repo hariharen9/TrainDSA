@@ -111,6 +111,7 @@ Time: O(N), Space: O(1).`,
   ],
   problems: [
     { id: 'maximum-subarray', title: 'Maximum Subarray', slug: 'maximum-subarray', difficulty: 'medium' },
+    { id: 'maximum-product-subarray', title: 'Maximum Product Subarray', slug: 'maximum-product-subarray', difficulty: 'medium' },
     { id: 'jump-game', title: 'Jump Game', slug: 'jump-game', difficulty: 'medium' },
     { id: 'jump-game-ii', title: 'Jump Game II', slug: 'jump-game-ii', difficulty: 'medium' },
     { id: 'gas-station', title: 'Gas Station', slug: 'gas-station', difficulty: 'medium' },

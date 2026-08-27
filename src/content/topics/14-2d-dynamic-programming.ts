@@ -123,6 +123,7 @@ Time: O(M * N), Space: O(M * N) (or O(N) compressed).`,
   ],
   problems: [
     { id: 'unique-paths', title: 'Unique Paths', slug: 'unique-paths', difficulty: 'medium' },
+    { id: 'minimum-path-sum', title: 'Minimum Path Sum', slug: 'minimum-path-sum', difficulty: 'medium' },
     { id: 'longest-common-subsequence', title: 'Longest Common Subsequence', slug: 'longest-common-subsequence', difficulty: 'medium' },
     { id: 'best-time-to-buy-and-sell-stock-with-cooldown', title: 'Best Time to Buy and Sell Stock with Cooldown', slug: 'best-time-to-buy-and-sell-stock-with-cooldown', difficulty: 'medium' },
     { id: 'coin-change-ii', title: 'Coin Change II', slug: 'coin-change-ii', difficulty: 'medium' },

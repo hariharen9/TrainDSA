@@ -81,6 +81,7 @@ Result: \`[[-1, -1, 2], [-1, 0, 1]]\`. Time: O(n²), Space: O(1) extra (ignoring
     { id: 'valid-palindrome', title: 'Valid Palindrome', slug: 'valid-palindrome', difficulty: 'easy' },
     { id: 'two-sum-ii', title: 'Two Sum II', slug: 'two-sum-ii-input-array-is-sorted', difficulty: 'medium' },
     { id: 'move-zeroes', title: 'Move Zeroes', slug: 'move-zeroes', difficulty: 'easy' },
+    { id: 'remove-duplicates-from-sorted-array', title: 'Remove Duplicates from Sorted Array', slug: 'remove-duplicates-from-sorted-array', difficulty: 'easy' },
     { id: 'sort-colors', title: 'Sort Colors', slug: 'sort-colors', difficulty: 'medium' },
     { id: '3sum', title: '3Sum', slug: '3sum', difficulty: 'medium' },
     { id: 'container-with-most-water', title: 'Container With Most Water', slug: 'container-with-most-water', difficulty: 'medium' },
