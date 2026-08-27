@@ -2,8 +2,10 @@ import { ArrowLeft, ChevronDown } from 'lucide-react'
 import { useMemo, useState, type ReactNode } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ProblemCard } from '../components/ProblemCard'
+import { TopicConceptView } from '../components/concept/TopicConceptView'
 import { MarkdownBody, ProgressBar } from '../components/ui'
 import { VisualizerSlot } from '../components/visualizers'
+import { TOPIC_CONTENT_MAP } from '../content'
 import { useAuth } from '../hooks/useAuth'
 import { useTracker } from '../hooks/useTracker'
 import { buildTopicProgress, completionPercent } from '../lib/progress'
@@ -14,6 +16,9 @@ export function TopicPage() {
   const { topics, problems, progressByProblem, updateProgress, error } = useTracker()
   const [gotchasOpen, setGotchasOpen] = useState(false)
   const [problemsOpen, setProblemsOpen] = useState(false)
+
+  // Raw TopicContent object (has all structured fields before MD compilation)
+  const rawTopic = TOPIC_CONTENT_MAP.get(topicId ?? '')
 
   const rows = useMemo(
     () => buildTopicProgress(topics, problems, progressByProblem),
@@ -61,10 +66,15 @@ export function TopicPage() {
         ) : null}
       </header>
 
-      {/* Concept is the main event: always expanded, no accordion friction. */}
-      <section className="rounded-3xl border border-line bg-panel p-6 sm:p-8">
-        <MarkdownBody>{row.topic.concept_md}</MarkdownBody>
-      </section>
+      {/* Concept sections — rendered as structured cards, not a flat MD blob */}
+      {rawTopic ? (
+        <TopicConceptView topic={rawTopic} />
+      ) : (
+        // Fallback: should never happen since content is bundled, but just in case
+        <section className="rounded-3xl border border-line bg-panel p-6 sm:p-8">
+          <MarkdownBody>{row.topic.concept_md}</MarkdownBody>
+        </section>
+      )}
 
       <VisualizerSlot visualizerId={row.topic.visualizer_id} />
 
