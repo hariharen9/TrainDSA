@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import {
+  Brain,
   ChevronDown,
   Flame,
   ListRestart,
@@ -7,6 +8,7 @@ import {
   LogOut,
   Route,
   Search,
+  Server,
   Settings,
   User,
   Zap,
@@ -20,8 +22,15 @@ import { useTracker } from '../hooks/useTracker'
 import { consecutiveStreak } from '../lib/progress'
 
 const mobileLinkClass = ({ isActive }: { isActive: boolean }) =>
-  `flex flex-1 flex-col items-center justify-center gap-1 py-2 text-[11px] font-medium whitespace-nowrap transition ${
+  `flex flex-1 flex-col items-center justify-center gap-1 py-2 text-[10px] font-medium whitespace-nowrap transition ${
     isActive ? 'text-gold font-semibold' : 'text-muted hover:text-ink'
+  }`
+
+const desktopNavClass = ({ isActive }: { isActive: boolean }) =>
+  `flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition ${
+    isActive
+      ? 'bg-gold text-canvas font-semibold shadow-xs'
+      : 'text-muted hover:text-ink hover:bg-panel/50'
   }`
 
 export function AppShell() {
@@ -30,7 +39,6 @@ export function AppShell() {
   const [searchOpen, setSearchOpen] = useState(false)
   const streak = consecutiveStreak(streakDates)
   const reviewCount = reviewEntries.length
-
 
   // Global Cmd+K / Ctrl+K listener
   useEffect(() => {
@@ -48,59 +56,39 @@ export function AppShell() {
     <div className="flex min-h-svh flex-col bg-canvas text-ink transition-colors duration-200">
       {/* Top Header */}
       <header className="sticky top-0 z-30 border-b border-line/70 bg-canvas/80 backdrop-blur-md backdrop-saturate-125 shadow-xs safe-top transition-colors">
-        <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
           {/* Left: Brand */}
           <div className="flex items-center gap-3 shrink-0">
-            <NavLink
-              to="/"
-              className="flex items-center gap-2.5 text-ink transition-opacity hover:opacity-90"
-            >
+            <NavLink to="/" className="flex items-center gap-2.5 text-ink transition-opacity hover:opacity-90">
               <Logo className="size-8 shrink-0" />
               <span className="font-serif text-xl font-bold tracking-tight">TrainDSA</span>
             </NavLink>
           </div>
 
           {/* Center: Segmented Pill Navigation */}
-          <nav className="hidden md:flex items-center rounded-full border border-line/70 bg-panel/60 backdrop-blur-md p-1 shadow-xs">
-            <NavLink
-              to="/"
-              end
-              className={({ isActive }) =>
-                `flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium transition ${
-                  isActive
-                    ? 'bg-gold text-canvas font-semibold shadow-xs'
-                    : 'text-muted hover:text-ink hover:bg-panel/50'
-                }`
-              }
-            >
+          <nav className="hidden md:flex items-center rounded-full border border-line/70 bg-panel/60 backdrop-blur-md p-1 shadow-xs gap-0.5">
+            <NavLink to="/" end className={desktopNavClass}>
               <Route className="size-3.5 shrink-0" />
               <span>Path</span>
             </NavLink>
 
-            <NavLink
-              to="/blind75"
-              className={({ isActive }) =>
-                `flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium transition ${
-                  isActive
-                    ? 'bg-gold text-canvas font-semibold shadow-xs'
-                    : 'text-muted hover:text-ink hover:bg-panel/50'
-                }`
-              }
-            >
+            <NavLink to="/blind75" className={desktopNavClass}>
               <Zap className="size-3.5 shrink-0" />
               <span>Blind 75</span>
             </NavLink>
 
-            <NavLink
-              to="/review"
-              className={({ isActive }) =>
-                `flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium transition ${
-                  isActive
-                    ? 'bg-gold text-canvas font-semibold shadow-xs'
-                    : 'text-muted hover:text-ink hover:bg-panel/50'
-                }`
-              }
-            >
+            <NavLink to="/behavioral" className={desktopNavClass}>
+              <Brain className="size-3.5 shrink-0" />
+              <span>Behavioral</span>
+            </NavLink>
+
+            <NavLink to="/system-design" className={desktopNavClass}>
+              <Server className="size-3.5 shrink-0" />
+              <span className="hidden lg:inline">System Design</span>
+              <span className="lg:hidden">SD</span>
+            </NavLink>
+
+            <NavLink to="/review" className={desktopNavClass}>
               {({ isActive }) => (
                 <>
                   <ListRestart className="size-3.5 shrink-0" />
@@ -184,34 +172,26 @@ export function AppShell() {
         <Outlet />
       </main>
 
-      {/* Mobile Floating Bottom Navigation Bar (<640px) */}
-      <nav className="fixed inset-x-3 bottom-3 z-50 pointer-events-auto flex sm:hidden rounded-2xl border border-line/80 bg-panel/85 backdrop-blur-lg backdrop-saturate-150 shadow-xl px-2 py-1 safe-bottom">
+      {/* Mobile Floating Bottom Navigation Bar (<640px) — 5 items */}
+      <nav className="fixed inset-x-2 bottom-3 z-50 pointer-events-auto flex sm:hidden rounded-2xl border border-line/80 bg-panel/85 backdrop-blur-lg backdrop-saturate-150 shadow-xl px-1 py-1 safe-bottom">
         <NavLink to="/" end className={mobileLinkClass}>
           {({ isActive }) => (
             <>
-              <div
-                className={`flex size-7 items-center justify-center rounded-full transition ${
-                  isActive ? 'bg-gold/20 text-gold' : ''
-                }`}
-              >
-                <Route className="size-4" />
+              <div className={`flex size-6 items-center justify-center rounded-full transition ${isActive ? 'bg-gold/20 text-gold' : ''}`}>
+                <Route className="size-3.5" />
               </div>
               <span>Path</span>
             </>
           )}
         </NavLink>
 
-        <NavLink to="/blind75" className={mobileLinkClass}>
+        <NavLink to="/behavioral" className={mobileLinkClass}>
           {({ isActive }) => (
             <>
-              <div
-                className={`flex size-7 items-center justify-center rounded-full transition ${
-                  isActive ? 'bg-gold/20 text-gold' : ''
-                }`}
-              >
-                <Zap className="size-4" />
+              <div className={`flex size-6 items-center justify-center rounded-full transition ${isActive ? 'bg-gold/20 text-gold' : ''}`}>
+                <Brain className="size-3.5" />
               </div>
-              <span>Blind 75</span>
+              <span>Behavioral</span>
             </>
           )}
         </NavLink>
@@ -219,14 +199,10 @@ export function AppShell() {
         <NavLink to="/review" className={mobileLinkClass}>
           {({ isActive }) => (
             <>
-              <div
-                className={`relative flex size-7 items-center justify-center rounded-full transition ${
-                  isActive ? 'bg-gold/20 text-gold' : ''
-                }`}
-              >
-                <ListRestart className="size-4" />
+              <div className={`relative flex size-6 items-center justify-center rounded-full transition ${isActive ? 'bg-gold/20 text-gold' : ''}`}>
+                <ListRestart className="size-3.5" />
                 {reviewCount > 0 && (
-                  <span className="absolute -top-1 -right-1.5 flex size-4 items-center justify-center rounded-full bg-gold text-[9px] font-bold text-canvas shadow-xs">
+                  <span className="absolute -top-1 -right-1.5 flex size-3.5 items-center justify-center rounded-full bg-gold text-[8px] font-bold text-canvas shadow-xs">
                     {reviewCount}
                   </span>
                 )}
@@ -236,15 +212,22 @@ export function AppShell() {
           )}
         </NavLink>
 
+        <NavLink to="/system-design" className={mobileLinkClass}>
+          {({ isActive }) => (
+            <>
+              <div className={`flex size-6 items-center justify-center rounded-full transition ${isActive ? 'bg-gold/20 text-gold' : ''}`}>
+                <Server className="size-3.5" />
+              </div>
+              <span>Design</span>
+            </>
+          )}
+        </NavLink>
+
         <NavLink to="/settings" className={mobileLinkClass}>
           {({ isActive }) => (
             <>
-              <div
-                className={`flex size-7 items-center justify-center rounded-full transition ${
-                  isActive ? 'bg-gold/20 text-gold' : ''
-                }`}
-              >
-                <Settings className="size-4" />
+              <div className={`flex size-6 items-center justify-center rounded-full transition ${isActive ? 'bg-gold/20 text-gold' : ''}`}>
+                <Settings className="size-3.5" />
               </div>
               <span>Settings</span>
             </>
