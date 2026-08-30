@@ -94,8 +94,10 @@ body {
 }
 
 .safe-pb-nav {
-  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 4.5rem);
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 7.5rem);
 }
+
+
 
 /* Custom smooth scrollbar */
 ::-webkit-scrollbar {

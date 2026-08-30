@@ -42,27 +42,28 @@ export function DashboardPage() {
         <p className="rounded-xl border border-hard/40 bg-hard/10 px-4 py-3 text-sm text-hard">{error}</p>
       ) : null}
 
-      {/* Hero Overview Cards */}
-      <section className="grid gap-4 sm:grid-cols-3">
+      {/* Hero Overview Cards (Single Row on Mobile & Desktop) */}
+      <section className="grid grid-cols-3 gap-2.5 sm:gap-4">
         <StatCard
-          label="Curriculum complete"
+          label="Complete"
           value={`${overall}%`}
-          hint={`${totalSolved} of ${totalProblems} problems solved`}
-          icon={<CheckCircle2 className="size-4 text-easy" />}
+          hint={`${totalSolved}/${totalProblems} solved`}
+          icon={<CheckCircle2 className="size-3.5 sm:size-4 text-easy shrink-0" />}
         />
         <StatCard
-          label="Daily streak"
+          label="Streak"
           value={`${streak}`}
-          hint="Consecutive active prep days"
-          icon={<Flame className="size-4 text-gold fill-gold/20" />}
+          hint="Active days"
+          icon={<Flame className="size-3.5 sm:size-4 text-gold fill-gold/20 shrink-0" />}
         />
         <StatCard
-          label="Topics Mastered"
-          value={`${rows.filter((r) => r.state === 'completed').length} / 17`}
-          hint="100% completed topics"
-          icon={<Trophy className="size-4 text-gold" />}
+          label="Mastered"
+          value={`${rows.filter((r) => r.state === 'completed').length}/17`}
+          hint="Topics done"
+          icon={<Trophy className="size-3.5 sm:size-4 text-gold shrink-0" />}
         />
       </section>
+
 
       {/* Next Recommended Topic Action */}
       {active ? (
@@ -240,13 +241,14 @@ function StatCard({
   icon?: ReactNode
 }) {
   return (
-    <div className="rounded-2xl border border-line bg-panel p-5 shadow-xs">
-      <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-muted">
-        {label}
+    <div className="rounded-2xl border border-line bg-panel p-3 sm:p-5 shadow-xs flex flex-col justify-between">
+      <div className="flex items-center justify-between gap-1 text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider text-muted">
+        <span className="truncate">{label}</span>
         {icon}
       </div>
-      <p className="mt-2 font-serif text-3xl font-bold text-ink">{value}</p>
-      <p className="mt-1 text-xs text-muted">{hint}</p>
+      <p className="mt-1.5 sm:mt-2 font-serif text-lg sm:text-3xl font-bold text-ink leading-tight truncate">{value}</p>
+      <p className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs text-muted truncate">{hint}</p>
     </div>
   )
 }
+

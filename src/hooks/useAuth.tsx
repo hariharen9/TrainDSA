@@ -16,8 +16,9 @@ type AuthContextValue = {
   loading: boolean
   signInWithPassword: (email: string, password: string) => Promise<string | null>
   signUpWithPassword: (email: string, password: string) => Promise<string | null>
-  signInWithMagicLink: (email: string) => Promise<string | null>
+  signInWithGitHub: () => Promise<string | null>
   signOut: () => Promise<void>
+  deleteAccount: () => Promise<string | null>
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined)
@@ -63,17 +64,52 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return error?.message ?? null
   }, [])
 
-  const signInWithMagicLink = useCallback(async (email: string) => {
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: window.location.origin },
+  const signInWithGitHub = useCallback(async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
+      options: {
+        redirectTo: window.location.origin,
+      },
     })
     return error?.message ?? null
   }, [])
 
   const signOut = useCallback(async () => {
+    if (!isSupabaseConfigured) return
     await supabase.auth.signOut()
   }, [])
+
+  const deleteAccount = useCallback(async () => {
+    if (!session?.user || !isSupabaseConfigured) {
+      return 'Not authenticated'
+    }
+
+    try {
+      // 1. Try calling the delete_user_account RPC function
+      const { error: rpcError } = await supabase.rpc('delete_user_account')
+
+      if (rpcError) {
+        // Fallback: If RPC not yet installed in Supabase, delete own progress & streaks directly via RLS
+        await supabase.from('progress_entries').delete().eq('user_id', session.user.id)
+        await supabase.from('streak_logs').delete().eq('user_id', session.user.id)
+      }
+
+      // 2. Clear any local progress keys to ensure fresh slate
+      try {
+        localStorage.removeItem('traindsa_local_progress')
+        localStorage.removeItem('traindsa_local_streaks')
+      } catch {
+        // ignore
+      }
+
+      // 3. Sign out the session
+      await supabase.auth.signOut()
+      return null
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Failed to delete account'
+      return msg
+    }
+  }, [session])
 
   const value = useMemo(
     () => ({
@@ -82,10 +118,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       loading,
       signInWithPassword,
       signUpWithPassword,
-      signInWithMagicLink,
+      signInWithGitHub,
       signOut,
+      deleteAccount,
     }),
-    [session, loading, signInWithPassword, signUpWithPassword, signInWithMagicLink, signOut],
+    [session, loading, signInWithPassword, signUpWithPassword, signInWithGitHub, signOut, deleteAccount],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
@@ -96,3 +133,4 @@ export function useAuth() {
   if (!ctx) throw new Error('useAuth must be used within AuthProvider')
   return ctx
 }
+

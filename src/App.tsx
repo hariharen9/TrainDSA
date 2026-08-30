@@ -8,6 +8,7 @@ import { AuthPage } from './pages/AuthPage'
 import { Blind75Page } from './pages/Blind75Page'
 import { DashboardPage } from './pages/DashboardPage'
 import { ReviewPage } from './pages/ReviewPage'
+import { SettingsPage } from './pages/SettingsPage'
 import { SetupPage } from './pages/SetupPage'
 import { TopicPage } from './pages/TopicPage'
 
@@ -33,6 +34,7 @@ export default function App() {
               <Route path="/practice" element={<Navigate to="/blind75" replace />} />
               <Route path="/topic/:topicId" element={<TopicPage />} />
               <Route path="/review" element={<ReviewPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
@@ -41,3 +43,4 @@ export default function App() {
     </ThemeProvider>
   )
 }
+
