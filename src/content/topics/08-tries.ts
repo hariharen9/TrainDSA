@@ -6,6 +6,18 @@ export const triesTopic: TopicContent = {
   order_index: 8,
   visualizer_id: null,
   summary: 'Tree-based string index for instant O(L) prefix matching, auto-complete, and multi-word grid search pruning.',
+  eliExplain: {
+    hook: 'A Trie (Prefix Tree) is a special tree built for string lookups. Instead of storing whole words, each edge represents one character. By following the path of characters, you can find or insert any word in O(L) time where L is the word\'s length — regardless of how many words are stored.',
+    analogy: 'Think of how a physical dictionary is alphabetically indexed with tabs. All words starting with "A" are in one section, "AB" in a sub-section, "ABA" even narrower. A trie works exactly like this — branching at each character — so to find "apple" you just follow A → P → P → L → E.',
+    keyIdeas: [
+      'Each node has up to 26 children (for lowercase English letters), one per possible next character.',
+      'Insert a word: walk the trie character by character, creating nodes where they don\'t exist. Mark the last node as "end of word".',
+      'Search for a word: walk character by character. If any node is missing, the word isn\'t in the trie. If you reach the end and it\'s marked, it exists.',
+      'Prefix search (autocomplete): walk the prefix path — if you reach the end without missing nodes, all words in the subtree below share that prefix.',
+      'Tries are memory-heavy (26 child slots per node) but blazingly fast for prefix-based operations compared to hash maps.',
+    ],
+    oneliner: '"Search by prefix", "autocomplete", or "word grid search" → the answer is a Trie.',
+  },
   intuition: `### 1. The Core Mental Model: Character-by-Character Paths
 
 A **Trie** (derived from re**trie**val, pronounced "try") is a multi-way search tree designed for strings.

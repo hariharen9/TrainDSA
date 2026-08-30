@@ -6,6 +6,18 @@ export const bitManipulationTopic: TopicContent = {
   order_index: 17,
   visualizer_id: null,
   summary: 'Harness binary arithmetic, XOR cancellation, Brian Kernighan\'s bit-clearing trick, and bitmask state compression.',
+  eliExplain: {
+    hook: 'Bit Manipulation allows you to do lightning-fast math directly on the 0s and 1s inside a computer\'s processor. It lets you store flags, count set bits, or cancel out duplicates in pure O(1) time and space.',
+    analogy: 'Think of a row of 32 light switches on a wall. Instead of creating 32 separate boolean variables in memory, a single integer holds all 32 light switch states (0 = off, 1 = on). Bitwise operators let you flip, check, or reset specific switches in a single CPU instruction.',
+    keyIdeas: [
+      'XOR (`^`) Magic: `x ^ x = 0` and `x ^ 0 = x`. XORing all numbers in an array where every element appears twice except one instantly isolates the unique single number.',
+      'Brian Kernighan\'s Trick: `n & (n - 1)` clears the lowest set bit (rightmost 1) of `n`. Repeat this in a loop to count the number of 1-bits in O(set bits) time.',
+      'Check Power of Two: If `n > 0 and (n & (n - 1)) == 0`, `n` is a power of 2 (has exactly one 1-bit).',
+      'Bitmasking: Set the i-th bit with `n | (1 << i)`, clear it with `n & ~(1 << i)`, and check it with `(n >> i) & 1`.',
+      'Bit Shifting: `n << 1` multiplies by 2; `n >> 1` divides by 2 (integer division).',
+    ],
+    oneliner: 'Duplicate cancellation = XOR (`^`). Count set bits / power of 2 = `n & (n - 1)`.',
+  },
   intuition: `### 1. The Core Mental Model: Operating on Raw Bits
 
 **Bit Manipulation** performs calculations directly on the individual binary 0s and 1s of integers.

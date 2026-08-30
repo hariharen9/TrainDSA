@@ -6,6 +6,18 @@ export const binarySearchTopic: TopicContent = {
   order_index: 5,
   visualizer_id: null,
   summary: 'Halve monotonic search spaces in logarithmic time, over indices or answer ranges.',
+  eliExplain: {
+    hook: 'Binary Search lets you find a value in a sorted list in O(log n) time by always looking at the middle element and throwing away the half that can\'t contain the answer. Every step cuts the remaining work in half.',
+    analogy: 'Think of a dictionary. You don\'t start at page 1 to find "zebra". You open to the middle, see "monkey", and since "zebra" comes after, you throw away the first half. Then you open the middle of the remaining half, and so on. In 30 steps you can search a billion pages.',
+    keyIdeas: [
+      'Only works on a sorted (or monotonic) search space — this is the required precondition.',
+      'Three variables: left, right, mid = (left + right) // 2. Move left or right based on comparison.',
+      'If arr[mid] == target → found. If arr[mid] < target → search right half (left = mid + 1). If arr[mid] > target → search left half (right = mid - 1).',
+      'Off-by-one errors are the #1 bug — be precise about whether your bounds are inclusive (<=) or exclusive (<).',
+      'Advanced use: binary search on the answer itself — ask "can I do it with X?" and binary search on X.',
+    ],
+    oneliner: '"Search in sorted array" or "find the minimum valid X" = binary search. Look at the middle, eliminate half.',
+  },
   intuition: `Binary search discards half of a sorted search space each step. The textbook form finds a target in a sorted array. The interview form searches over an *answer range*: capacity, time, or an index where a predicate flips from false to true.
 
 The loop invariant is everything: decide whether \`mid\` is still feasible, then move \`lo\` or \`hi\` so the feasible region never loses the answer. Answer-range search usually looks like \`while lo < hi\` with \`hi = mid\` or \`lo = mid + 1\`.

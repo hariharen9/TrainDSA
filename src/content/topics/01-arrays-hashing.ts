@@ -6,6 +6,18 @@ export const arraysHashingTopic: TopicContent = {
   order_index: 1,
   visualizer_id: 'two-sum-hashmap',
   summary: 'The ultimate guide to Arrays, Dynamic Resizing, Hash Functions, Hash Tables, and the 5 essential interview patterns.',
+  eliExplain: {
+    hook: 'An array is a row of labelled boxes in memory. A hash table is a magic trick that turns any value — a word, a number — into a box number instantly, so you can look it up in one step instead of searching every box.',
+    analogy: 'Imagine a coat check at a restaurant. You hand in your coat and get a ticket with a number (say, #42). To retrieve it, you go directly to hook #42 — no searching. That ticket number is your hash code, and the coat rack is your array. A hash table is exactly this system applied to any data.',
+    keyIdeas: [
+      'Arrays give you O(1) access by index, but O(n) search by value — you have to look at every element.',
+      'A Hash Table solves the search problem: it converts your value into an index using a hash function, then stores/retrieves in O(1) average time.',
+      'Hash Set answers "have I seen this before?" — stores unique values only. Hash Map answers "what is associated with this key?" — stores key→value pairs.',
+      'Collisions (two values mapping to the same index) are handled automatically — you don\'t need to worry about them in interviews, just know they exist.',
+      'Dynamic arrays (Python list, JS array) double in size when full — individual appends are O(n) when resizing happens, but averaged across many appends it works out to O(1) per append.',
+    ],
+    oneliner: 'When a problem screams "find if X exists" or "count how many times X appears" — reach for a Hash Set or Hash Map before anything else.',
+  },
   intuition: `### 1. The Physical Foundation: Static & Dynamic Arrays
 
 An **Array** is a contiguous sequence of elements stored back-to-back in physical RAM.

@@ -6,6 +6,18 @@ export const slidingWindowTopic: TopicContent = {
   order_index: 3,
   visualizer_id: 'sliding-window',
   summary: 'Maintain a contiguous subarray or substring boundary without resetting indices backward.',
+  eliExplain: {
+    hook: 'Sliding Window is a trick for answering questions about a contiguous sub-section of an array or string ("what is the longest/shortest/best window that satisfies condition X?") without re-scanning from scratch every time.',
+    analogy: 'Imagine you\'re looking through a train window as the train moves forward. The window frame stays the same size (fixed window) or stretches and shrinks (variable window), but it only ever moves forward — it never reverses. You see new scenery on the right as old scenery disappears on the left.',
+    keyIdeas: [
+      'Use two pointers — left and right — that both only move forward (never backward). This guarantees O(n) time.',
+      'Expand the window by moving right forward to include new elements.',
+      'Shrink the window by moving left forward to remove elements that violate your condition.',
+      'Fixed-size window: move both pointers together, one step at a time — great for "max sum of k elements".',
+      'Variable-size window: shrink left whenever the window is invalid, then record the size — great for "longest substring without repeats".',
+    ],
+    oneliner: 'If the problem asks for "longest/shortest subarray/substring that satisfies X" — it\'s almost always a sliding window.',
+  },
   intuition: `Picture a rubber band stretched over part of an array — that's the window. It has two ends, \`left\` and \`right\`, and it only ever moves forward. \`right\` reaches out to grab new elements; \`left\` lets go of old ones when the window stops being valid. Neither pointer ever walks backward.
 
 That one property — *no backward movement* — is the entire reason sliding window is fast. A brute-force "try every subarray" approach checks all \`n²\` start/end pairs. Sliding window instead asks: as I move \`right\` forward one step at a time, what's the least amount of work I need to do at \`left\` to keep the window valid? Each index is added to the window exactly once (when \`right\` passes it) and removed at most once (when \`left\` passes it). Two passes total, not \`n\` passes — that's how you get from O(n²) down to O(n).`,

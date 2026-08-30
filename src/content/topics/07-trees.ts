@@ -6,6 +6,18 @@ export const treesTopic: TopicContent = {
   order_index: 7,
   visualizer_id: null,
   summary: 'Master hierarchical recursion, DFS traversals (Pre/In/Post), BFS level-order queues, and BST boundary invariants.',
+  eliExplain: {
+    hook: 'A Tree is a hierarchical structure of nodes where each node has a value and zero or more children. Every tree problem has a beautiful recursive property: each node is the root of its own sub-tree. Solve it for one node, and you\'ve solved it for all.',
+    analogy: 'Think of a company org chart. The CEO is the root. Each manager is a node with employees (children) below them. To answer "how many people report under manager X?", you count X\'s direct reports plus recursively ask the same question for each of them. That\'s tree recursion in real life.',
+    keyIdeas: [
+      'DFS (Depth-First Search): go deep before going wide. Uses recursion (or an explicit stack). Three orders: Pre-order (root first), In-order (left, root, right), Post-order (children first).',
+      'BFS (Breadth-First Search): level by level. Uses a queue. Perfect for "shortest path" or "level-order" problems.',
+      'BST (Binary Search Tree): every node\'s left subtree is smaller, right subtree is larger. In-order traversal of a BST gives sorted output.',
+      'The recursive template for almost every tree problem: handle base case (null node), recurse on left and right, combine results.',
+      'Height/depth of a tree = O(n) for skewed, O(log n) for balanced. Most tree operations are O(height).',
+    ],
+    oneliner: 'Trust the recursion: assume your function works correctly for subtrees, use that result to solve the parent — that\'s the entire tree playbook.',
+  },
   intuition: `### 1. The Core Mental Model: Subtree Recursion
 
 A **Binary Tree** is a recursive data structure: every node is the root of its own left and right subtrees. 

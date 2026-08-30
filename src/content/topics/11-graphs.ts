@@ -6,6 +6,18 @@ export const graphsTopic: TopicContent = {
   order_index: 11,
   visualizer_id: null,
   summary: 'Master Adjacency Lists, 2D Grid Flood Fills, BFS Shortest Paths, and Kahn\'s Topological Sorting.',
+  eliExplain: {
+    hook: 'A Graph is a network of nodes connected by links. Unlike trees, graphs can have loops (cycles) and any node can connect to any other node. You search graphs to find connections, shortest routes, or connected islands of data.',
+    analogy: 'Think of social media or flight routes. Each person or airport is a node (vertex), and friendships or direct flights are lines (edges). To find if six degrees of separation connects you to someone, or the fewest flight layovers between cities, you traverse a graph.',
+    keyIdeas: [
+      'Representing graphs: Convert edge lists into an Adjacency List (a dictionary mapping each node to its list of neighbors) for instant O(1) neighbor lookups.',
+      'Visited Set is mandatory: Because graphs have cycles, always track `visited` nodes to avoid infinite loops.',
+      'BFS (Queue): Explores in concentric ripples. Guarantees the shortest path in unweighted graphs.',
+      'DFS (Recursion / Stack): Explores deeply down one path to the end. Best for finding connected components, detecting cycles, or flood-filling 2D grids (like Island counting).',
+      'Topological Sort (Kahn\'s Algorithm): Orders tasks with prerequisites (directed acyclic graphs / DAGs) from start to finish.',
+    ],
+    oneliner: 'Unweighted shortest path = BFS with a Queue. Connected regions / island counting / cycle checks = DFS with a Visited set.',
+  },
   intuition: `### 1. The Core Mental Model: Vertices & Edges
 
 A **Graph** $G = (V, E)$ represents a network of entities (Vertices) connected by relationships (Edges). 

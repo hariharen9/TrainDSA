@@ -6,6 +6,18 @@ export const advancedGraphsTopic: TopicContent = {
   order_index: 12,
   visualizer_id: null,
   summary: 'Dijkstra shortest paths on weighted graphs, Union-Find (DSU) cycle detection, and Minimum Spanning Trees.',
+  eliExplain: {
+    hook: 'Advanced Graphs deals with roads that have toll prices (edge weights) and grouping networks together. When edges have costs or travel times, simple BFS fails, and we need specialized algorithms like Dijkstra and Union-Find.',
+    analogy: 'Think of Google Maps GPS. It doesn\'t just pick the route with the fewest turns; it calculates the fastest route taking into account highway speeds vs. city traffic (edge weights). Dijkstra\'s algorithm is the core engine behind finding the cheapest/fastest route.',
+    keyIdeas: [
+      'Dijkstra\'s Algorithm: BFS upgraded with a Min-Heap. Always expands the cheapest path first, guaranteeing shortest distance on graphs with non-negative weights in O((V + E) log V).',
+      'Union-Find (DSU): A super fast data structure for grouping connected items together and checking if two items belong to the same group in near O(1) time.',
+      'Cycle detection with DSU: If you try to connect two nodes that already share the same representative parent, adding that edge forms a cycle.',
+      'Minimum Spanning Tree (Kruskal\'s / Prim\'s): Connects all nodes together with the minimum total edge cost without creating loops.',
+      'Bellman-Ford / Topological Shortest Path: Used when weights can be negative or when the graph is a DAG.',
+    ],
+    oneliner: 'Shortest path with edge weights/costs = Dijkstra (Min-Heap). Dynamic grouping or cycle detection = Union-Find (DSU).',
+  },
   intuition: `### 1. The Core Mental Model: Weighted Graphs & Connectivity
 
 When edges have **weights / costs**, plain BFS cannot find the shortest path because the path with the fewest edges might have a much higher total weight.

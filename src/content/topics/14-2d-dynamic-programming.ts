@@ -6,6 +6,18 @@ export const twoDDynamicProgrammingTopic: TopicContent = {
   order_index: 14,
   visualizer_id: null,
   summary: 'Solve multi-variable subproblems: 2D grid pathfinding, two-string sequence alignments (LCS, Edit Distance), and state machines.',
+  eliExplain: {
+    hook: '2D Dynamic Programming is just 1D DP with two moving pieces instead of one — like moving across rows and columns on a grid, or matching characters between two different strings at the same time.',
+    analogy: 'Think of an Excel spreadsheet. To calculate cell (row 3, col 4), you look at the cell directly above it and the cell directly to its left, add them together, and write down the result. You fill in the grid row by row from top-left to bottom-right until you get the final answer in the bottom-right corner.',
+    keyIdeas: [
+      'Two moving pointers: Your DP table `dp[i][j]` tracks two independent variables, like index `i` in string 1 and index `j` in string 2, or row `r` and column `c` in a grid.',
+      'Grid Pathfinding: Number of paths to `(r, c)` = paths from top `(r-1, c)` + paths from left `(r, c-1)`.',
+      'String Comparison (LCS / Edit Distance): If `s1[i] == s2[j]`, take diagonal `dp[i-1][j-1] + 1`; if different, take best of inserting/deleting/replacing from adjacent cells.',
+      '0/1 Knapsack: `dp[i][w]` decides whether to include item `i` with weight `w` or skip it.',
+      'Space Optimization: Because calculating the current row only needs the previous row, a 2D matrix can often be compressed into a single 1D array of size O(N).',
+    ],
+    oneliner: 'Comparing two strings or navigating a 2D grid with min/max cost/ways = 2D DP matrix. Fill row-by-row.',
+  },
   intuition: `### 1. The Core Mental Model: Two Independent State Parameters
 
 While 1D DP tracks a single variable (like array index or coin amount), **2-D Dynamic Programming** is required when subproblems depend on **two independent state parameters** \`(i, j)\`:

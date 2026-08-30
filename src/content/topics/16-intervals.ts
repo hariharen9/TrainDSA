@@ -6,6 +6,18 @@ export const intervalsTopic: TopicContent = {
   order_index: 16,
   visualizer_id: null,
   summary: 'Master 1D coordinate ranges, interval merging, earliest-deadline scheduling, and concurrent room tracking with Min-Heaps.',
+  eliExplain: {
+    hook: 'Interval problems deal with chunks of time or ranges on a timeline (e.g. meetings from 9:00 to 10:30). The goal is usually to merge overlapping blocks, insert a new appointment, or count how many meeting rooms are needed at peak time.',
+    analogy: 'Think of booking conference rooms on a shared calendar. If Meeting A is 1pm–3pm and Meeting B is 2pm–4pm, they overlap from 2pm–3pm and merge into one big blocked window (1pm–4pm), or require 2 simultaneous conference rooms.',
+    keyIdeas: [
+      'Golden Rule #1: ALWAYS sort intervals by start time (or sometimes end time) before doing anything else.',
+      'Overlap condition: Two intervals `[s1, e1]` and `[s2, e2]` overlap if and only if `s2 <= e1` (the next meeting starts before the current one finishes).',
+      'Merge Intervals: If overlapping, the merged interval ends at `max(e1, e2)`. If not overlapping, save current and move to next.',
+      'Meeting Rooms II: Use a Min-Heap of meeting end times to track which room frees up earliest. The peak heap size equals the number of conference rooms required.',
+      'Non-overlapping / Earliest Deadline First: Greedily pick intervals that end earliest to leave the maximum room for subsequent events.',
+    ],
+    oneliner: 'Sort intervals by start time first. If `next.start <= prev.end`, they overlap → merge with `max(prev.end, next.end)`.',
+  },
   intuition: `### 1. The Core Mental Model: 1D Timeline Overlaps
 
 An **Interval** is a continuous range \`[start, end]\` representing a span of time, a meeting, or a geometric segment.

@@ -6,6 +6,18 @@ export const backtrackingTopic: TopicContent = {
   order_index: 10,
   visualizer_id: null,
   summary: 'Systematic state-space tree search with the Choose ➔ Explore ➔ Unchoose template for combinatorial problems.',
+  eliExplain: {
+    hook: 'Backtracking is a way to find all possible solutions by building them one step at a time. Whenever a choice hits a dead end or completes a valid answer, you take one step backward (undo your last choice) and try the next option.',
+    analogy: 'Imagine navigating an escape room maze. At every fork in the road, you leave a breadcrumb, pick the left path, and walk forward. If you hit a dead end, you rewind along your breadcrumbs back to the fork, pick the right path, and keep going until you test all possibilities.',
+    keyIdeas: [
+      'The 3-step mantra: Choose (add candidate), Explore (recurse deeper), Unchoose (remove candidate/undo state).',
+      'Pruning: throw away dead-end branches immediately before recursing to save massive computation time.',
+      'Decision Tree: every recursive call represents a level in the tree where you decide which item to include or pick next.',
+      'Base Case: when your current candidate reaches the target length or sum, save a copy (e.g. `list(path)`) and return.',
+      'Combinations vs Permutations: use an index pointer `start` for combinations (no duplicates/order doesn\'t matter) or a `visited` set for permutations.',
+    ],
+    oneliner: '"Find all combinations/permutations/subsets" or "N-Queens/Sudoku solver" → always Backtracking (Choose ➔ Recurse ➔ Undo).',
+  },
   intuition: `### 1. The Core Mental Model: Decision Trees with State Undo
 
 **Backtracking** is a structured, exhaustive search algorithm that explores all possible solutions by building candidates step-by-step. 

@@ -1,4 +1,5 @@
 import type { TopicContent } from '../../content/types'
+import { EliSection } from './EliSection'
 import { IntuitionSection } from './IntuitionSection'
 import { PatternSection } from './PatternSection'
 import { WorkedExampleSection } from './WorkedExampleSection'
@@ -14,6 +15,7 @@ interface TopicConceptViewProps {
  * visually distinct section cards instead of a flat Markdown blob.
  *
  * Sections rendered (in order, all optional):
+ *   0. Plain English First (ELI) — teal card with hook, analogy, key ideas, one-liner
  *   1. Intuition        — gold-accented card with MarkdownBody
  *   2. Pattern Recognition — green-accented card with parsed pattern cards
  *   3. Worked Example   — blue-accented card with code/trace split pane
@@ -23,6 +25,8 @@ interface TopicConceptViewProps {
 export function TopicConceptView({ topic }: TopicConceptViewProps) {
   return (
     <div className="space-y-5">
+      {topic.eliExplain && <EliSection eli={topic.eliExplain} />}
+
       {topic.intuition && <IntuitionSection intuition={topic.intuition} />}
 
       {topic.patternRecognition && (

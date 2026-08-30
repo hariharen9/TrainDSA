@@ -6,6 +6,18 @@ export const stackTopic: TopicContent = {
   order_index: 4,
   visualizer_id: null,
   summary: 'LIFO structure for deferred work, matching pairs, and monotonic comparisons.',
+  eliExplain: {
+    hook: 'A Stack is a pile where you can only add to the top and remove from the top. Last thing you pushed is the first thing you pop — LIFO (Last In, First Out). It\'s the data structure for any problem where you process things in reverse order of how you received them.',
+    analogy: 'Think of a stack of plates. You put a new plate on top; when you need a plate, you take from the top. You can\'t pull the bottom plate without removing everything above it. That\'s a stack — the last plate you added is always the first one you grab.',
+    keyIdeas: [
+      'Push = add to top (O(1)). Pop = remove from top (O(1)). Peek = look at top without removing (O(1)).',
+      'Perfect for matching pairs: opening bracket goes on the stack; closing bracket must match the top, then pop it.',
+      'Monotonic stack: keep the stack in sorted order (always increasing or always decreasing) — used for "next greater element" problems.',
+      'The call stack in your program is literally a stack: each function call is pushed, and returns are popped.',
+      'If you need to undo operations in reverse order (like Ctrl+Z), a stack is your structure.',
+    ],
+    oneliner: '"Matching pairs" (parentheses, brackets) or "next greater element" → always a stack.',
+  },
   intuition: `A stack is LIFO: the last unmatched opener, the last pending operator, or the last warmer day you have not resolved. Matching parentheses, RPN evaluation, and nested structures all map onto push/pop with a clear "what is still open?" meaning.
 
 Monotonic stacks keep elements in increasing or decreasing order. When a new value breaks the order, you pop and those popped indices have found their next greater/smaller element. Daily Temperatures and many "next greater" problems are this template.

@@ -6,6 +6,18 @@ export const linkedListsTopic: TopicContent = {
   order_index: 6,
   visualizer_id: null,
   summary: 'Master pointer manipulation, dummy sentinel nodes, in-place reversals, and fast/slow pointer cycle detection.',
+  eliExplain: {
+    hook: 'A Linked List is a chain of nodes where each node stores a value and a pointer to the next node. Unlike arrays, the elements don\'t live next to each other in memory — they\'re scattered around, connected only by these pointers.',
+    analogy: 'Think of a treasure hunt where each clue tells you where the next clue is hidden. You can\'t jump to clue #5 directly — you must follow the chain from clue #1. To add a new clue between #3 and #4, you just update clue #3 to point to your new clue, and new clue to point to #4. No shifting needed.',
+    keyIdeas: [
+      'No index access — to reach node at position k, you must traverse from the head one step at a time: O(n).',
+      'Insert or delete anywhere: just rewire the previous node\'s "next" pointer — O(1) if you already have the position.',
+      'The dummy head node trick: attach a fake node before the real head to avoid special-casing empty list or head deletion.',
+      'Fast/slow pointers: fast moves 2 steps, slow moves 1. When fast reaches the end, slow is at the midpoint. If they ever meet again, there\'s a cycle.',
+      'To reverse a linked list: keep three pointers — prev, curr, next — and rewire curr.next = prev as you walk forward.',
+    ],
+    oneliner: 'Draw the before/after pointer diagram on paper before writing any code — linked list bugs are almost always pointer direction errors.',
+  },
   intuition: `### 1. The Core Mental Model: Pointer Rewiring
 
 Unlike arrays where elements sit contiguously in RAM, a **Linked List** consists of individual nodes scattered across memory, connected solely by \`next\` (and optionally \`prev\`) references.

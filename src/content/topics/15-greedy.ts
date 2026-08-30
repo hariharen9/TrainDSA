@@ -6,6 +6,18 @@ export const greedyTopic: TopicContent = {
   order_index: 15,
   visualizer_id: null,
   summary: 'Make locally optimal choices without backtracking, backed by mathematical invariant proofs like Kadane and Jump Game horizons.',
+  eliExplain: {
+    hook: 'A Greedy algorithm makes the single best, most profitable choice at every step right now, without looking back or second-guessing itself. If making the locally best choice always leads to the overall best answer, Greedy works in super fast O(n) or O(n log n) time.',
+    analogy: 'Think of making change with coins (quarters, dimes, nickels, pennies). To give 67 cents using the fewest coins, you don\'t test every combination — you greedily take the biggest possible coin that fits: 25¢, then another 25¢, then 10¢, then 5¢, then two 1¢ coins. At every step, picking the biggest immediate coin gives the optimal result.',
+    keyIdeas: [
+      'No backtracking or memoization: Once a greedy choice is made, it\'s locked in forever.',
+      'Kadane\'s Algorithm (Max Subarray): If your current running sum drops below 0, it\'s dragging you down — reset it greedily to 0 and start fresh.',
+      'Jump Game: Keep track of the furthest index (horizon) you can possibly reach from your current position.',
+      'Sorting is often Step 1: Sorting items by finish time, start time, or value/weight ratio puts the best choice directly in front of you.',
+      'When Greedy fails: If picking the best immediate choice traps you into a bad future (like non-standard coin denominations), you must switch to Dynamic Programming.',
+    ],
+    oneliner: 'If you never need to reconsider a choice and always pick the biggest/furthest/soonest option → Greedy (Kadane, Jump Game, Scheduling).',
+  },
   intuition: `### 1. The Core Mental Model: The Best Immediate Step
 
 A **Greedy Algorithm** builds a solution step-by-step, always choosing the option that looks **best in the immediate moment** (locally optimal), without ever backtracking or reconsidering past choices.

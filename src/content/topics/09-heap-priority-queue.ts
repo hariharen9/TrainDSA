@@ -6,6 +6,18 @@ export const heapPriorityQueueTopic: TopicContent = {
   order_index: 9,
   visualizer_id: null,
   summary: 'Maintain dynamic running extrema in logarithmic time with binary heaps, two-heap medians, and top-K filters.',
+  eliExplain: {
+    hook: 'A Heap (Priority Queue) always gives you the smallest (min-heap) or largest (max-heap) element instantly in O(1), and lets you add/remove elements in O(log n). It\'s the go-to structure any time you need to repeatedly grab the most urgent item from a changing collection.',
+    analogy: 'Think of an emergency room. Patients don\'t get seen in arrival order — the most critical patient always goes next. When a new critical patient arrives, they jump to the front. When the most critical is treated, the next-most-critical automatically becomes the front. That\'s a max-heap where priority = severity.',
+    keyIdeas: [
+      'Min-heap: the smallest element is always at the top. Pop gives you the minimum in O(log n).',
+      'Max-heap: the largest element is always at the top. In Python, negate values to simulate a max-heap with heapq.',
+      'Push (insert) and pop (extract min/max) are both O(log n). Peek (read top without removing) is O(1).',
+      'Top-K pattern: maintain a min-heap of size K. If a new element is larger than the top, swap it in. After processing all elements, the heap contains the K largest.',
+      'Two-heap trick for running median: one max-heap for the lower half, one min-heap for the upper half. Keep them balanced in size.',
+    ],
+    oneliner: '"Kth largest/smallest", "merge K sorted lists", or "running median" = reach for a heap first.',
+  },
   intuition: `### 1. The Core Mental Model: The Constant-Time Extrema
 
 A **Priority Queue** is an abstract data structure that allows items to be inserted dynamically while keeping the **minimum** (or **maximum**) element instantly accessible at index \`0\` in **\`O(1)\` time**.

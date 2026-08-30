@@ -6,6 +6,18 @@ export const twoPointersTopic: TopicContent = {
   order_index: 2,
   visualizer_id: null,
   summary: 'Replace nested loops by moving bounded indices monotonically across ordered spaces.',
+  eliExplain: {
+    hook: 'Two Pointers is the technique of using two index variables that move through an array (or string) from different positions — usually both ends — instead of nesting loops inside each other. It turns O(n²) brute force into O(n).',
+    analogy: 'Think of a tug-of-war rope. You grab one end, your friend grabs the other. You both walk toward the middle. Together you cover the whole rope in one pass — no one needs to walk the full length twice. That\'s two pointers: one from the left, one from the right, meeting in the middle.',
+    keyIdeas: [
+      'The array usually needs to be sorted first — two pointers only work when you can decide which pointer to move based on the current sum/difference.',
+      'Left pointer starts at index 0, right pointer starts at the last index. They move inward based on a condition (e.g. sum too big → move right left; sum too small → move left right).',
+      'Replaces the classic O(n²) nested "for i... for j..." pattern with a single O(n) pass.',
+      'Also used on two separate arrays/lists (e.g. merging sorted arrays) — one pointer per array, advance the one with the smaller value.',
+      'Fast/slow pointer (Floyd\'s cycle detection) is a variant — both start at the same point but one moves 2 steps at a time.',
+    ],
+    oneliner: 'Sorted array + "find pair that sums to X" = two pointers. Start both ends, move inward.',
+  },
   intuition: `Two pointers replace nested loops when the search space is ordered or can be ordered. Place indices at opposite ends and move the one that cannot produce a better answer, or walk a fast pointer ahead of a slow one to find a middle, a cycle, or a window of length k.
 
 Converging pointers shine on sorted arrays: Two Sum II, 3Sum, and container-with-most-water all shrink the candidate pair set monotonically. The slow/fast (tortoise and hare) variant detects cycles and finds midpoints without extra storage.

@@ -6,6 +6,18 @@ export const oneDDynamicProgrammingTopic: TopicContent = {
   order_index: 13,
   visualizer_id: null,
   summary: 'Break complex optimization problems into overlapping subproblems using the 5-step DP framework and state compression.',
+  eliExplain: {
+    hook: 'Dynamic Programming is simply breaking a big problem down into smaller sub-questions, and writing down the answers so you never have to recompute the same calculation twice.',
+    analogy: 'Imagine your teacher asks: "What is 1 + 1 + 1 + 1 + 1?" You count and say "5". Then they write another "+ 1" at the end and ask: "What is it now?" You immediately say "6" without recounting from the start because you remembered the previous answer. That memory is Dynamic Programming.',
+    keyIdeas: [
+      'Memoization (Top-Down): Write standard recursion, but check a cache dictionary `dp = {}` before computing. If answer is already there, return it in O(1).',
+      'Tabulation (Bottom-Up): Start at the smallest base cases (e.g. `dp[0] = 0, dp[1] = 1`) and build an array iteratively upwards in a `for` loop.',
+      'State transition: The mathematical relationship between previous subproblems and the current one (e.g. `dp[i] = dp[i-1] + dp[i-2]`).',
+      'Space Optimization: If calculating the current answer only needs the last 1 or 2 values (like Fibonacci or House Robber), you can replace the entire array with two variables to achieve O(1) space.',
+      'Common 1D patterns: Climbing Stairs (Fibonacci), House Robber (choose/skip), Coin Change (minimum steps), Longest Increasing Subsequence (LIS).',
+    ],
+    oneliner: '"Find min/max cost/ways to reach state X" + overlapping choices = 1D Dynamic Programming. Solve base cases, build upwards.',
+  },
   intuition: `### 1. The Core Mental Model: Remembering the Past
 
 **Dynamic Programming (DP)** is simply **careful recursion with a memory cache**.
