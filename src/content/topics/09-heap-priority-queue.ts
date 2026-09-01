@@ -4,7 +4,7 @@ export const heapPriorityQueueTopic: TopicContent = {
   id: 'heap-priority-queue',
   title: 'Heap / Priority Queue',
   order_index: 9,
-  visualizer_id: null,
+  visualizer_id: 'heap-priority-queue',
   summary: 'Maintain dynamic running extrema in logarithmic time with binary heaps, two-heap medians, and top-K filters.',
   eliExplain: {
     hook: 'A Heap (Priority Queue) always gives you the smallest (min-heap) or largest (max-heap) element instantly in O(1), and lets you add/remove elements in O(log n). It\'s the go-to structure any time you need to repeatedly grab the most urgent item from a changing collection.',

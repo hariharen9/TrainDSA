@@ -4,7 +4,7 @@ export const oneDDynamicProgrammingTopic: TopicContent = {
   id: '1d-dynamic-programming',
   title: '1-D Dynamic Programming',
   order_index: 13,
-  visualizer_id: null,
+  visualizer_id: '1d-dynamic-programming',
   summary: 'Break complex optimization problems into overlapping subproblems using the 5-step DP framework and state compression.',
   eliExplain: {
     hook: 'Dynamic Programming is simply breaking a big problem down into smaller sub-questions, and writing down the answers so you never have to recompute the same calculation twice.',

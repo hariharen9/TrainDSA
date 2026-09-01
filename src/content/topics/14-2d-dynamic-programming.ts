@@ -4,7 +4,7 @@ export const twoDDynamicProgrammingTopic: TopicContent = {
   id: '2d-dynamic-programming',
   title: '2-D Dynamic Programming',
   order_index: 14,
-  visualizer_id: null,
+  visualizer_id: '2d-dynamic-programming',
   summary: 'Solve multi-variable subproblems: 2D grid pathfinding, two-string sequence alignments (LCS, Edit Distance), and state machines.',
   eliExplain: {
     hook: '2D Dynamic Programming is just 1D DP with two moving pieces instead of one — like moving across rows and columns on a grid, or matching characters between two different strings at the same time.',

@@ -4,7 +4,7 @@ export const stackTopic: TopicContent = {
   id: 'stack',
   title: 'Stack',
   order_index: 4,
-  visualizer_id: null,
+  visualizer_id: 'stack',
   summary: 'LIFO structure for deferred work, matching pairs, and monotonic comparisons.',
   eliExplain: {
     hook: 'A Stack is a pile where you can only add to the top and remove from the top. Last thing you pushed is the first thing you pop — LIFO (Last In, First Out). It\'s the data structure for any problem where you process things in reverse order of how you received them.',

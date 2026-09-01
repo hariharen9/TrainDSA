@@ -4,7 +4,7 @@ export const backtrackingTopic: TopicContent = {
   id: 'backtracking',
   title: 'Backtracking',
   order_index: 10,
-  visualizer_id: null,
+  visualizer_id: 'backtracking',
   summary: 'Systematic state-space tree search with the Choose ➔ Explore ➔ Unchoose template for combinatorial problems.',
   eliExplain: {
     hook: 'Backtracking is a way to find all possible solutions by building them one step at a time. Whenever a choice hits a dead end or completes a valid answer, you take one step backward (undo your last choice) and try the next option.',

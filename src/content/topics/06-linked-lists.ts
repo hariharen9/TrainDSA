@@ -4,7 +4,7 @@ export const linkedListsTopic: TopicContent = {
   id: 'linked-lists',
   title: 'Linked Lists',
   order_index: 6,
-  visualizer_id: null,
+  visualizer_id: 'linked-lists',
   summary: 'Master pointer manipulation, dummy sentinel nodes, in-place reversals, and fast/slow pointer cycle detection.',
   eliExplain: {
     hook: 'A Linked List is a chain of nodes where each node stores a value and a pointer to the next node. Unlike arrays, the elements don\'t live next to each other in memory — they\'re scattered around, connected only by these pointers.',

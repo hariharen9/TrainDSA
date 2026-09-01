@@ -4,7 +4,7 @@ export const advancedGraphsTopic: TopicContent = {
   id: 'advanced-graphs',
   title: 'Advanced Graphs',
   order_index: 12,
-  visualizer_id: null,
+  visualizer_id: 'advanced-graphs',
   summary: 'Dijkstra shortest paths on weighted graphs, Union-Find (DSU) cycle detection, and Minimum Spanning Trees.',
   eliExplain: {
     hook: 'Advanced Graphs deals with roads that have toll prices (edge weights) and grouping networks together. When edges have costs or travel times, simple BFS fails, and we need specialized algorithms like Dijkstra and Union-Find.',

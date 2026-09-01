@@ -4,7 +4,7 @@ export const twoPointersTopic: TopicContent = {
   id: 'two-pointers',
   title: 'Two Pointers',
   order_index: 2,
-  visualizer_id: null,
+  visualizer_id: 'two-pointers',
   summary: 'Replace nested loops by moving bounded indices monotonically across ordered spaces.',
   eliExplain: {
     hook: 'Two Pointers is the technique of using two index variables that move through an array (or string) from different positions — usually both ends — instead of nesting loops inside each other. It turns O(n²) brute force into O(n).',

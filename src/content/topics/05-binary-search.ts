@@ -4,7 +4,7 @@ export const binarySearchTopic: TopicContent = {
   id: 'binary-search',
   title: 'Binary Search',
   order_index: 5,
-  visualizer_id: null,
+  visualizer_id: 'binary-search',
   summary: 'Halve monotonic search spaces in logarithmic time, over indices or answer ranges.',
   eliExplain: {
     hook: 'Binary Search lets you find a value in a sorted list in O(log n) time by always looking at the middle element and throwing away the half that can\'t contain the answer. Every step cuts the remaining work in half.',

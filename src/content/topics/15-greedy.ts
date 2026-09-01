@@ -4,7 +4,7 @@ export const greedyTopic: TopicContent = {
   id: 'greedy',
   title: 'Greedy',
   order_index: 15,
-  visualizer_id: null,
+  visualizer_id: 'greedy',
   summary: 'Make locally optimal choices without backtracking, backed by mathematical invariant proofs like Kadane and Jump Game horizons.',
   eliExplain: {
     hook: 'A Greedy algorithm makes the single best, most profitable choice at every step right now, without looking back or second-guessing itself. If making the locally best choice always leads to the overall best answer, Greedy works in super fast O(n) or O(n log n) time.',

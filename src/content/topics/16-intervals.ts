@@ -4,7 +4,7 @@ export const intervalsTopic: TopicContent = {
   id: 'intervals',
   title: 'Intervals',
   order_index: 16,
-  visualizer_id: null,
+  visualizer_id: 'intervals',
   summary: 'Master 1D coordinate ranges, interval merging, earliest-deadline scheduling, and concurrent room tracking with Min-Heaps.',
   eliExplain: {
     hook: 'Interval problems deal with chunks of time or ranges on a timeline (e.g. meetings from 9:00 to 10:30). The goal is usually to merge overlapping blocks, insert a new appointment, or count how many meeting rooms are needed at peak time.',

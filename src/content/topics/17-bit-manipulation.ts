@@ -4,7 +4,7 @@ export const bitManipulationTopic: TopicContent = {
   id: 'bit-manipulation',
   title: 'Bit Manipulation',
   order_index: 17,
-  visualizer_id: null,
+  visualizer_id: 'bit-manipulation',
   summary: 'Harness binary arithmetic, XOR cancellation, Brian Kernighan\'s bit-clearing trick, and bitmask state compression.',
   eliExplain: {
     hook: 'Bit Manipulation allows you to do lightning-fast math directly on the 0s and 1s inside a computer\'s processor. It lets you store flags, count set bits, or cancel out duplicates in pure O(1) time and space.',

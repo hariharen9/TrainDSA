@@ -4,7 +4,7 @@ export const triesTopic: TopicContent = {
   id: 'tries',
   title: 'Tries (Prefix Trees)',
   order_index: 8,
-  visualizer_id: null,
+  visualizer_id: 'tries',
   summary: 'Tree-based string index for instant O(L) prefix matching, auto-complete, and multi-word grid search pruning.',
   eliExplain: {
     hook: 'A Trie (Prefix Tree) is a special tree built for string lookups. Instead of storing whole words, each edge represents one character. By following the path of characters, you can find or insert any word in O(L) time where L is the word\'s length — regardless of how many words are stored.',

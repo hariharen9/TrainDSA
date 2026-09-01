@@ -4,7 +4,7 @@ export const treesTopic: TopicContent = {
   id: 'trees',
   title: 'Trees',
   order_index: 7,
-  visualizer_id: null,
+  visualizer_id: 'trees',
   summary: 'Master hierarchical recursion, DFS traversals (Pre/In/Post), BFS level-order queues, and BST boundary invariants.',
   eliExplain: {
     hook: 'A Tree is a hierarchical structure of nodes where each node has a value and zero or more children. Every tree problem has a beautiful recursive property: each node is the root of its own sub-tree. Solve it for one node, and you\'ve solved it for all.',

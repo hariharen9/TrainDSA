@@ -4,7 +4,7 @@ export const graphsTopic: TopicContent = {
   id: 'graphs',
   title: 'Graphs',
   order_index: 11,
-  visualizer_id: null,
+  visualizer_id: 'graphs',
   summary: 'Master Adjacency Lists, 2D Grid Flood Fills, BFS Shortest Paths, and Kahn\'s Topological Sorting.',
   eliExplain: {
     hook: 'A Graph is a network of nodes connected by links. Unlike trees, graphs can have loops (cycles) and any node can connect to any other node. You search graphs to find connections, shortest routes, or connected islands of data.',
